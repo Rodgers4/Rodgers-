@@ -18,6 +18,14 @@
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: #fff;
       text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    body.loaded {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     header {
@@ -115,6 +123,36 @@
     }
 
     .battery { margin-top: 10px; font-size: 1rem; color: #0ff; }
+
+    /* Social Feed Styles */
+    .social-container {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 15px;
+      margin-top: 25px;
+      text-align: left;
+    }
+    .social-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0,255,255,0.3);
+    }
+    .social-card h3 {
+      margin-top: 0;
+      color: #0ff;
+    }
+    .social-post {
+      background: rgba(0,0,0,0.3);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .social-post:hover {
+      background: rgba(0,255,255,0.2);
+    }
   </style>
 </head>
 <body>
@@ -149,11 +187,36 @@
       <a href="https://wa.me/254755660053" target="_blank" class="btn">WhatsApp</a>
       <a href="https://www.facebook.com/Taz254" target="_blank" class="btn">Facebook</a>
       <a href="mailto:rogersonyango87@gmail.com" target="_blank" class="btn">Gmail</a>
+      <button class="btn" onclick="launchWithPopup('Launching Queen Bella...', 'https://queen-bella-e7ej.onrender.com')">Queen Bella</button>
+      <button class="btn" onclick="launchWithPopup('Launching Toxic Lover...', 'https://www.facebook.com/Taz254')">Toxic Lover</button>
+    </section>
+
+    <!-- SOCIAL FEED INTERFACE -->
+    <section id="social-feed">
+      <h2>Live Interface</h2>
+      <div class="social-container">
+        <div class="social-card">
+          <h3>Stories</h3>
+          <div class="social-post" onclick="showFeedPopup('Story 1 Clicked')">Story 1</div>
+          <div class="social-post" onclick="showFeedPopup('Story 2 Clicked')">Story 2</div>
+          <div class="social-post" onclick="showFeedPopup('Story 3 Clicked')">Story 3</div>
+        </div>
+        <div class="social-card">
+          <h3>Feed</h3>
+          <div class="social-post" onclick="showFeedPopup('You opened the first post!')">Sample Post: This is how your feed will look.</div>
+          <div class="social-post" onclick="showFeedPopup('You opened another post!')">Another post in your feed preview.</div>
+        </div>
+        <div class="social-card">
+          <h3>Suggestions</h3>
+          <div class="social-post" onclick="showFeedPopup('No new requests right now')">Friend Request: None</div>
+          <div class="social-post" onclick="showFeedPopup('Suggested User 1 Profile Opened')">Suggested User 1</div>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2025 Rodgers Onyango | Powered by RoyTech</p>
+    <p>POWERED BY ROYTECH ©2025</p>
   </footer>
 
   <!-- Popup for history -->
@@ -165,10 +228,15 @@
     <button onclick="closeHistory()">Close</button>
   </div>
 
-  <!-- Popup for "RoyTech Loading" -->
+  <!-- General Popup -->
   <div class="popup" id="popup">RoyTech Loading...</div>
 
   <script>
+    // Fade-in effect
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+    });
+
     // Clock
     function updateClock() {
       const now = new Date();
@@ -190,23 +258,28 @@
       });
     }
 
-    // RoyTech popup on button clicks
-    const allBtns = document.querySelectorAll('.btn');
-    allBtns.forEach(btn => btn.addEventListener('click', () => showPopup()));
-
-    function showPopup() {
+    function showPopup(message = "RoyTech Loading...") {
       const popup = document.getElementById('popup');
+      popup.textContent = message;
       popup.classList.add('show');
       setTimeout(() => popup.classList.remove('show'), 2000);
     }
 
-    // History modal
     function showHistory() {
       document.getElementById('historyPopup').classList.add('show');
     }
     function closeHistory() {
       document.getElementById('historyPopup').classList.remove('show');
     }
+
+    function showFeedPopup(message) {
+      showPopup(message);
+    }
+
+    function launchWithPopup(message, url) {
+      showPopup(message);
+      setTimeout(() => window.open(url, "_blank"), 2200);
+    }
   </script>
 </body>
-</html>
+  </html>
