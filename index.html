@@ -3,191 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Rodgers Onyango - Portfolio & Projects">
-  <meta property="og:title" content="Rodgers Onyango | Portfolio">
-  <meta property="og:description" content="Explore Rodgers Onyango's projects, bots, and web creations.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://rodgersweb.vercel.app">
-  <meta property="og:image" content="https://rodgersweb.vercel.app/preview.png">
-  <title>Rodgers Onyango | Portfolio</title>
+  <title>RoyTech Live Console</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      color: #00ff99;
+      transition: background 0.5s, color 0.5s;
+    }
+    .light-mode {
+      background: #f4f4f4;
+      color: #111;
+    }
+    /* Weather box */
+    #weather-box {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background: rgba(0,0,0,0.6);
+      color: #00ff99;
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 14px;
+      backdrop-filter: blur(6px);
+    }
+    .light-mode #weather-box {
+      background: rgba(255,255,255,0.8);
+      color: #222;
+    }
+    /* Dark/Light Toggle */
+    #mode-toggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    .light-mode #mode-toggle {
+      background: rgba(0,0,0,0.1);
+      color: #000;
+    }
+    /* Console */
+    #roytech-console {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(13, 13, 13, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #00ff99;
+      font-size: 16px;
+      padding: 20px;
+      border-top: 1px solid rgba(0,255,153,0.3);
+      box-shadow: 0px -4px 20px rgba(0, 255, 153, 0.3);
       text-align: center;
     }
-
-    header {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-    }
-
-    h1 { margin: 0; font-size: 2.5rem; }
-
-    .clock {
-      font-size: 2rem;
-      margin-top: 10px;
-      color: #0ff;
-      text-shadow: 0 0 10px #0ff;
-    }
-
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
-
-    section { margin-bottom: 20px; }
-
-    h2 {
-      color: #0ff;
-      border-bottom: 2px solid #0ff;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #0ff;
-      color: #000;
-      border: none;
-      padding: 10px 15px;
-      margin: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      border-radius: 10px;
-      transition: 0.3s;
-      text-decoration: none;
-    }
-
-    .btn:hover { transform: scale(1.1); }
-
-    footer {
-      background: rgba(0,0,0,0.8);
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
-
-    /* Popup animation */
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: rgba(0, 0, 0, 0.95);
-      color: #0ff;
-      padding: 20px 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #0ff;
-      font-size: 1.3rem;
-      max-width: 400px;
-      line-height: 1.5;
+    #roytech-screen {
+      min-height: 70px;
+      white-space: pre-wrap;
       text-align: left;
-      opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      z-index: 9999;
     }
-
-    .popup.show {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 1;
-    }
-
-    .popup button {
-      margin-top: 10px;
-      display: block;
-      width: 100%;
-      background: #0ff;
-      border: none;
-      color: #000;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .battery { margin-top: 10px; font-size: 1rem; color: #0ff; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Rodgers Onyango</h1>
-    <div class="clock" id="clock">00:00:00</div>
-    <div class="battery" id="battery">Battery: --%</div>
-  </header>
-
-  <main>
-    <!-- ABOUT -->
-    <section id="about">
-      <h2>About Me</h2>
-      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools. My passion is making smart, automated systems that simplify people's lives.</p>
-      <button class="btn" onclick="showHistory()">Read My Full History</button>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects">
-      <h2>Projects</h2>
-      <p><strong>QUEEN BELLA:</strong> WhatsApp bot with real-time status viewing, reactions, and automations.</p>
-      <p><strong>Toxic Lover:</strong> Facebook Messenger AI chatbot using Gemini + Groq AI.</p>
-      <p><strong>Portfolio Website:</strong> Built with HTML, CSS, deployed on Vercel + GitHub Pages.</p>
-    </section>
-
-    <!-- CONTACT BUTTONS -->
-    <section id="contact">
-      <h2>Contact Me</h2>
-      <a href="https://www.instagram.com/Roy254_onyango" target="_blank" class="btn">Instagram</a>
-      <a href="https://www.tiktok.com/@_ouma4" target="_blank" class="btn">TikTok</a>
-      <a href="https://x.com/rogersonyango54" target="_blank" class="btn">Twitter (X)</a>
-      <a href="https://wa.me/254755660053" target="_blank" class="btn">WhatsApp</a>
-      <a href="https://www.facebook.com/Taz254" target="_blank" class="btn">Facebook</a>
-      <a href="mailto:rogersonyango87@gmail.com" target="_blank" class="btn">Gmail</a>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 Rodgers Onyango | Powered by RoyTech</p>
-  </footer>
-
-  <!-- Popup for history -->
-  <div class="popup" id="historyPopup">
-    <p><strong>My Journey:</strong><br><br>
-    I was born and raised in Kisumu, Kenya. Growing up, I loved exploring technology and finding new ways to create things online.  
-    Over the years, I built bots like QUEEN BELLA and Toxic Lover, which connect with WhatsApp and Messenger users worldwide.  
-    I continue learning and building every day, with a vision to use technology to uplift my family and inspire others.</p>
-    <button onclick="closeHistory()">Close</button>
-  </div>
-
-  <!-- Popup for "RoyTech Loading" -->
-  <div class="popup" id="popup">RoyTech Loading...</div>
-
-  <!-- ✅ RoyTech Live Console + Join Button -->
-  <div style="
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(13, 13, 13, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: #00ff99;
-    font-family: 'Courier New', monospace;
-    font-size: 16px;
-    padding: 20px;
-    border-top: 1px solid rgba(0,255,153,0.3);
-    box-shadow: 0px -4px 20px rgba(0, 255, 153, 0.3);
-    z-index: 9999;
-    text-align: center;
-  ">
-    <div id="roytech-screen" style="min-height: 70px; white-space: pre-wrap; text-align:left;"></div>
-    <a href="https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e" target="_blank" style="
+    /* Join Button */
+    #join-btn {
       display: inline-block;
       margin-top: 12px;
       background: #25D366;
@@ -199,53 +85,38 @@
       font-size: 18px;
       box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
       transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-    " onmouseover="this.style.transform='scale(1.08)';this.style.background='#1ebe57';this.style.boxShadow='0px 4px 18px rgba(0,255,153,0.6)'" 
-       onmouseout="this.style.transform='scale(1)';this.style.background='#25D366';this.style.boxShadow='0px 4px 15px rgba(0,0,0,0.4)'">
+    }
+    #join-btn:hover {
+      transform: scale(1.08);
+      background: #1ebe57;
+      box-shadow: 0px 4px 18px rgba(0,255,153,0.6);
+    }
+    /* Footer */
+    #footer {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Weather + Date -->
+  <div id="weather-box">📡 Loading weather...</div>
+
+  <!-- Dark/Light Mode Button -->
+  <button id="mode-toggle" onclick="toggleMode()">🌙 Dark</button>
+
+  <!-- Live Console -->
+  <div id="roytech-console">
+    <div id="roytech-screen"></div>
+    <a id="join-btn" href="https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e" target="_blank">
       🚀 Join RoyTech Team
     </a>
+    <div id="footer">Powered by RoyTech | ©2025</div>
   </div>
 
   <script>
-    // Clock
-    function updateClock() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-    }
-    setInterval(updateClock, 1000); updateClock();
-
-    // Battery
-    if (navigator.getBattery) {
-      navigator.getBattery().then(function(battery) {
-        function updateBattery() {
-          document.getElementById('battery').textContent = `Battery: ${(battery.level * 100).toFixed(0)}%`;
-        }
-        battery.addEventListener('levelchange', updateBattery);
-        updateBattery();
-      });
-    }
-
-    // RoyTech popup on button clicks
-    const allBtns = document.querySelectorAll('.btn');
-    allBtns.forEach(btn => btn.addEventListener('click', () => showPopup()));
-
-    function showPopup() {
-      const popup = document.getElementById('popup');
-      popup.classList.add('show');
-      setTimeout(() => popup.classList.remove('show'), 2000);
-    }
-
-    // History modal
-    function showHistory() {
-      document.getElementById('historyPopup').classList.add('show');
-    }
-    function closeHistory() {
-      document.getElementById('historyPopup').classList.remove('show');
-    }
-
-    // Live typing effect
+    // Live typing text
     const textLines = [
       "🔧 Booting up RoyTech console...",
       "💡 Connecting tech innovators worldwide...",
@@ -274,6 +145,37 @@
       }
     }
     typeLine();
+
+    // Dark / Light Mode Toggle
+    function toggleMode() {
+      document.body.classList.toggle("light-mode");
+      document.getElementById("mode-toggle").innerText =
+        document.body.classList.contains("light-mode") ? "🌞 Light" : "🌙 Dark";
+    }
+
+    // Weather + Date
+    function updateWeather(lat, lon) {
+      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+        .then(res => res.json())
+        .then(data => {
+          const weather = data.current_weather;
+          const today = new Date().toLocaleDateString();
+          document.getElementById("weather-box").innerHTML =
+            `📅 ${today} | 🌡️ ${weather.temperature}°C | ${weather.weathercode < 3 ? "☀️ Clear" : "☁️ Cloudy"}`;
+        })
+        .catch(() => {
+          document.getElementById("weather-box").innerText = "⚠️ Weather unavailable";
+        });
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        pos => updateWeather(pos.coords.latitude, pos.coords.longitude),
+        () => document.getElementById("weather-box").innerText = "⚠️ Location blocked"
+      );
+    } else {
+      document.getElementById("weather-box").innerText = "⚠️ Location not supported";
+    }
   </script>
 </body>
-  </html>
+</html>
