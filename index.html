@@ -1,272 +1,392 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Rodgers Onyango - Portfolio & Projects">
-  <title>Rodgers Onyango | Portfolio</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      text-align: center;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    body.light-mode {
-      background: #f5f5f5;
-      color: #000;
-    }
-
-    header {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-      position: relative;
-    }
-
-    h1 { margin: 0; font-size: 2.5rem; }
-
-    .clock {
-      font-size: 2rem;
-      margin-top: 10px;
-      color: #0ff;
-      text-shadow: 0 0 10px #0ff;
-    }
-
-    .battery, #weather {
-      font-size: 1rem;
-      color: #0ff;
-      margin-top: 5px;
-    }
-
-    .dark-toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      background: rgba(0,0,0,0.3);
-      padding: 5px 10px;
-      border-radius: 8px;
-      transition: background 0.3s;
-    }
-
-    .dark-toggle:hover {
-      background: rgba(0,0,0,0.6);
-    }
-
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
-
-    section { margin-bottom: 20px; }
-
-    h2 {
-      color: #0ff;
-      border-bottom: 2px solid #0ff;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #0ff;
-      color: #000;
-      border: none;
-      padding: 10px 15px;
-      margin: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      border-radius: 10px;
-      transition: 0.3s;
-      text-decoration: none;
-    }
-
-    .btn:hover { transform: scale(1.1); }
-
-    footer {
-      background: rgba(0,0,0,0.8);
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
-
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: rgba(0, 0, 0, 0.95);
-      color: #0ff;
-      padding: 20px 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #0ff;
-      font-size: 1.2rem;
-      max-width: 400px;
-      line-height: 1.5;
-      text-align: left;
-      opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      z-index: 9999;
-    }
-
-    .popup.show {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 1;
-    }
-
-    .popup button {
-      margin-top: 10px;
-      display: block;
-      width: 100%;
-      background: #0ff;
-      border: none;
-      color: #000;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rodgers Onyango | RoyTech</title>
+<style>
+  :root{
+    --bg1:#0f2027; --bg2:#203a43; --bg3:#2c5364;
+    --neon:#00ffd1; --muted:rgba(255,255,255,0.8); --card:rgba(0,0,0,0.6);
+    --accent:#25D366;
+  }
+  html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));color:#fff}
+  body.light{ --neon:#0066ff; --muted:rgba(0,0,0,0.8); background:#f6f9fc; color:#111; }
+  /* header */
+  header{position:fixed;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);z-index:40}
+  .left{display:flex;gap:12px;align-items:center}
+  h1{margin:0;font-size:1.2rem;letter-spacing:0.6px}
+  .right{display:flex;gap:10px;align-items:center}
+  .mode-btn{background:var(--neon);color:#000;border:none;padding:6px 10px;border-radius:8px;cursor:pointer;font-weight:700}
+  .clock{font-family:monospace;color:var(--neon);font-size:0.95rem}
+  /* top corner info */
+  .top-info{position:fixed;left:18px;top:68px;z-index:30;font-family:monospace}
+  .top-info div{background:var(--card);padding:6px 10px;border-radius:8px;margin-top:8px;color:var(--neon);font-size:0.9rem}
+  /* main */
+  main{max-width:940px;margin:118px auto 220px auto;background:var(--card);padding:22px;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.5)}
+  h2{color:var(--neon);display:inline-block;border-bottom:2px solid var(--neon);padding-bottom:6px}
+  p{color:var(--muted);line-height:1.5}
+  .btn{display:inline-block;background:var(--neon);color:#000;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:800;margin:8px;cursor:pointer}
+  .btn:hover{transform:scale(1.03)}
+  .small{font-size:0.9rem;color:var(--muted)}
+  /* socials */
+  .socials{display:flex;gap:12px;justify-content:center;margin-top:12px}
+  .socials a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid var(--neon);color:var(--neon);text-decoration:none}
+  .socials a:hover{background:var(--neon);color:#000;transform:scale(1.08)}
+  /* founder */
+  .founder{max-width:360px;margin:18px auto;padding:12px;border-radius:10px;background:rgba(0,0,0,0.45);border:1px solid rgba(0,255,153,0.06);text-align:left}
+  .founder h3{color:var(--neon);margin:0 0 8px}
+  .founder p{color:var(--muted);margin:6px 0}
+  /* bottom console */
+  .console{position:fixed;left:0;right:0;bottom:0;padding:14px;background:rgba(0,0,0,0.9);font-family:monospace;color:var(--neon);z-index:30}
+  .screen{white-space:pre-wrap;min-height:60px;max-width:940px;margin:0 auto;text-align:left}
+  .join{display:inline-block;margin-top:8px;background:var(--accent);color:#fff;padding:10px 18px;border-radius:30px;text-decoration:none;font-weight:800}
+  /* modal wrapper */
+  .modal-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:80;align-items:center;justify-content:center;padding:18px}
+  .modal-wrap.show{display:flex}
+  .modal{width:100%;max-width:880px;background:linear-gradient(180deg,#071016,#0b0b0b);padding:16px;border-radius:12px;color:var(--neon);position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+  .close{position:absolute;right:12px;top:12px;background:#ff6b6b;border:none;color:white;padding:8px;border-radius:8px;cursor:pointer}
+  /* calculator */
+  .calc-display{background:#000;color:var(--neon);padding:12px;border-radius:8px;font-size:1.4rem;text-align:right}
+  .calc-keys{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .calc-keys button{flex:1 1 22%;background:var(--neon);color:#000;border:none;padding:12px;border-radius:8px;font-weight:800;cursor:pointer}
+  /* calendar */
+  .calendar table{width:100%;border-collapse:collapse;color:var(--neon)}
+  .calendar th,.calendar td{padding:8px;border:1px solid rgba(0,255,153,0.06);text-align:center}
+  .calendar th{background:var(--neon);color:#000}
+  /* game */
+  #gameCanvas{background:#000;display:block;margin:12px auto;border-radius:8px;border:2px solid rgba(0,255,153,0.06)}
+  .game-hud{display:flex;justify-content:space-between;align-items:center;margin-top:6px;color:var(--muted)}
+  /* responsive */
+  @media(max-width:720px){
+    main{margin:100px 12px 240px 12px}
+    .modal{padding:12px}
+  }
+</style>
 </head>
 <body>
+  <!-- header -->
   <header>
-    <h1>Rodgers Onyango</h1>
-    <div class="dark-toggle" onclick="toggleDarkMode()">☀️/🌙</div>
-    <div class="clock" id="clock">00:00:00</div>
-    <div class="battery" id="battery">Battery: --%</div>
-    <div id="weather">Loading weather...</div>
+    <div class="left">
+      <h1>Rodgers Onyango</h1>
+    </div>
+    <div class="right">
+      <div class="clock" id="clock">00:00:00</div>
+      <button id="modeBtn" class="mode-btn" title="Toggle dark/light">🌙</button>
+    </div>
   </header>
 
+  <!-- top-left small info -->
+  <div class="top-info" aria-hidden="false">
+    <div id="battery">Battery: --%</div>
+    <div id="weather">Weather: loading...</div>
+  </div>
+
+  <!-- main content -->
   <main>
-    <!-- ABOUT -->
-    <section>
+    <section id="about">
       <h2>About Me</h2>
-      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools.</p>
-      <button class="btn" onclick="showHistory()">Read My Full History</button>
+      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools. I build automation and bots that connect people and services.</p>
+      <button class="btn" id="historyBtn">Read My Full History</button>
     </section>
 
-    <!-- PROJECTS -->
-    <section>
+    <section id="projects">
       <h2>Projects</h2>
       <p><strong>QUEEN BELLA:</strong> WhatsApp bot with real-time status viewing, reactions, and automations.</p>
-      <p><strong>Toxic Lover:</strong> Facebook Messenger AI chatbot using Gemini + Groq AI.</p>
+      <p><strong>TOXIC LOVER:</strong> Facebook Messenger AI chatbot using Gemini + Groq AI.</p>
     </section>
 
-    <!-- SOCIAL + BOTS -->
-    <section>
+    <section id="connect">
       <h2>Connect</h2>
-      <a href="https://www.instagram.com/Roy254_onyango" target="_blank" class="btn">Instagram</a>
-      <a href="https://www.tiktok.com/@_ouma4" target="_blank" class="btn">TikTok</a>
-      <a href="https://x.com/rogersonyango54" target="_blank" class="btn">Twitter</a>
-      <a href="https://wa.me/254755660053" target="_blank" class="btn">WhatsApp</a>
-      <a href="https://www.facebook.com/Taz254" target="_blank" class="btn">Facebook</a>
-      <a href="mailto:rogersonyango87@gmail.com" target="_blank" class="btn">Gmail</a>
-      <button class="btn" onclick="showBots()">USE MY BOTS</button>
-      <button class="btn" onclick="showOwner()">OWNER INFO</button>
+      <div>
+        <a class="btn" href="https://www.instagram.com/Roy254_onyango" target="_blank">Instagram</a>
+        <a class="btn" href="https://www.tiktok.com/@_ouma4" target="_blank">TikTok</a>
+        <a class="btn" href="https://x.com/rogersonyango54" target="_blank">X</a>
+        <a class="btn" href="https://wa.me/254755660053" target="_blank">WhatsApp</a>
+        <a class="btn" href="https://www.facebook.com/Taz254" target="_blank">Facebook</a>
+        <a class="btn" href="mailto:rogersonyango87@gmail.com" target="_blank">Gmail</a>
+      </div>
+
+      <div style="margin-top:10px;">
+        <button class="btn" id="useBotsBtn">USE MY BOTS</button>
+        <button class="btn" id="ownerBtn">OWNER INFO</button>
+      </div>
     </section>
 
-    <!-- MENU CONTENTS DIRECTLY -->
-    <section>
+    <!-- Tools placed directly -->
+    <section id="tools">
       <h2>Tools</h2>
-      <button class="btn" onclick="alert('Calculator coming soon')">Modern Calculator</button>
-      <button class="btn" onclick="alert('Game coming soon')">Block Game</button>
-      <button class="btn" onclick="alert('Calendar coming soon')">Calendar</button>
-      <button class="btn" onclick="showSupport()">Support</button>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px">
+        <button class="btn" id="openCalc">Modern Calculator</button>
+        <button class="btn" id="openGame">Block Game</button>
+        <button class="btn" id="openCalendar">Calendar</button>
+        <button class="btn" id="openSupport">Support</button>
+      </div>
     </section>
+
+    <!-- founder summary card -->
+    <div class="founder" aria-hidden="false">
+      <h3>Founder • Rodgers Onyango</h3>
+      <p><strong>Home:</strong> Kisumu, Kenya</p>
+      <p><strong>Status:</strong> Single</p>
+      <p><strong>Contact:</strong> 0755660053</p>
+      <p><strong>Age:</strong> 17 years</p>
+      <p><strong>Education:</strong> Bachelor Degree — Egerton</p>
+    </div>
+
+    <!-- social icons -->
+    <div class="socials" role="navigation" aria-label="social links">
+      <a href="https://www.instagram.com/Roy254_onyango" target="_blank" title="Instagram">📷</a>
+      <a href="https://www.tiktok.com/@_ouma4" target="_blank" title="TikTok">🎵</a>
+      <a href="https://x.com/rogersonyango54" target="_blank" title="X">𝕏</a>
+      <a href="https://wa.me/254755660053" target="_blank" title="WhatsApp">💬</a>
+      <a href="https://www.facebook.com/Taz254" target="_blank" title="Facebook">📘</a>
+      <a href="mailto:rogersonyango87@gmail.com" title="Email">✉️</a>
+    </div>
   </main>
 
-  <footer>
-    <p>Powered by RoyTech | © 2025</p>
+  <!-- RoyTech console -->
+  <div class="console" aria-live="polite">
+    <div class="screen" id="roytechScreen"></div>
+    <a class="join" href="https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e" target="_blank">🚀 Join RoyTech Team</a>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- Calculator modal -->
+  <div class="modal-wrap" id="modalCalc">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalCalc')">✖</button>
+      <h2>RoyTech Calculator</h2>
+      <div class="calc-display" id="calcDisplay">0</div>
+      <div class="calc-keys" id="calcKeys">
+        <button onclick="calcInput('7')">7</button><button onclick="calcInput('8')">8</button><button onclick="calcInput('9')">9</button><button onclick="calcInput('/')">÷</button>
+        <button onclick="calcInput('4')">4</button><button onclick="calcInput('5')">5</button><button onclick="calcInput('6')">6</button><button onclick="calcInput('*')">×</button>
+        <button onclick="calcInput('1')">1</button><button onclick="calcInput('2')">2</button><button onclick="calcInput('3')">3</button><button onclick="calcInput('-')">−</button>
+        <button onclick="calcInput('0')">0</button><button onclick="calcInput('.')">.</button><button onclick="calculate()">=</button><button onclick="calcInput('+')">+</button>
+        <button style="flex:1 1 100%;background:#ff6666;color:#fff" onclick="clearCalc()">C</button>
+      </div>
+      <div style="text-align:right;margin-top:10px;color:var(--muted);font-size:0.9rem">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Game modal -->
+  <div class="modal-wrap" id="modalGame">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalGame'); resetGame();">✖</button>
+      <h2>RoyTech Block Game</h2>
+      <p class="small" style="color:var(--muted)">Controls: ← → move, ↑ rotate, ↓ drop, Esc close</p>
+      <canvas id="gameCanvas" width="320" height="320"></canvas>
+      <div class="game-hud">
+        <div>Score: <span id="score">0</span></div>
+        <div>High Score: <span id="highscore">0</span></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+        <button class="btn" onclick="startGame()">Start</button>
+        <button class="btn" onclick="resetGame()">Reset</button>
+      </div>
+      <div style="text-align:right;margin-top:10px;color:var(--muted)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Calendar modal -->
+  <div class="modal-wrap" id="modalCalendar">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalCalendar')">✖</button>
+      <h2>Calendar</h2>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <button class="btn" id="prevMonth">◀</button>
+        <div id="monthLabel" style="flex:1;text-align:center;color:var(--neon);font-weight:800"></div>
+        <button class="btn" id="nextMonth">▶</button>
+      </div>
+      <div class="calendar" id="calendarWidget"></div>
+      <div style="text-align:right;margin-top:10px;color:var(--muted)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Support modal -->
+  <div class="modal-wrap" id="modalSupport">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalSupport')">✖</button>
+      <h2>Support RoyTech</h2>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <button class="btn" onclick="copyToClipboard('254716388654')">📲 Mpesa: 254716388654 (copy)</button>
+        <button class="btn" onclick="window.open('mailto:rogersonyango87@gmail.com')">💳 PayPal: rogersonyango87@gmail.com</button>
+        <button class="btn" onclick="copyToClipboard('254755660053')">📱 AirtelMoney: 254755660053 (copy)</button>
+        <button class="btn" onclick="openAdvice()">📝 Leave Advice / Message</button>
+      </div>
+      <div style="text-align:right;margin-top:10px;color:var(--muted)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Follow (socials) modal -->
+  <div class="modal-wrap" id="modalFollow">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalFollow')">✖</button>
+      <h2>Follow RoyTech</h2>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+        <button class="btn" onclick="window.open('https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e')">📢 RoyTech Channel</button>
+        <button class="btn" onclick="window.open('https://www.facebook.com/Taz254')">📘 Facebook</button>
+        <button class="btn" onclick="window.open('https://www.instagram.com/Roy254_onyango')">📷 Instagram</button>
+        <button class="btn" onclick="window.open('https://x.com/rogersonyango54')">𝕏</button>
+        <button class="btn" onclick="window.open('https://www.tiktok.com/@_ouma4')">🎵 TikTok</button>
+        <button class="btn" onclick="window.open('mailto:rogersonyango87@gmail.com')">✉️ Email</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bots modal -->
+  <div class="modal-wrap" id="modalBots">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalBots')">✖</button>
+      <h2>Use My Bots</h2>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+        <button class="btn" onclick="window.open('https://www.facebook.com/queenbella')">QUEEN BELLA (Facebook)</button>
+        <button class="btn" onclick="window.open('https://www.facebook.com/toxiclover')">TOXIC LOVER (Facebook)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Owner details modal -->
+  <div class="modal-wrap" id="modalOwner">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalOwner')">✖</button>
+      <h2>Owner • Rodgers Onyango</h2>
+      <div style="text-align:left;color:var(--muted);line-height:1.5;margin-top:8px">
+        <p><strong>Name:</strong> RODGERS ONYANGO</p>
+        <p><strong>Home:</strong> KISUMU, KENYA</p>
+        <p><strong>Status:</strong> SINGLE</p>
+        <p><strong>Contact:</strong> 0755660053</p>
+        <p><strong>Age:</strong> 17 YEARS</p>
+        <p><strong>Education:</strong> BACHELOR DEGREE</p>
+        <p><strong>Institution:</strong> EGERTON</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advice modal (WhatsApp send form) -->
+  <div class="modal-wrap" id="modalAdvice">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalAdvice')">✖</button>
+      <h2>Leave Advice / Message</h2>
+      <textarea id="adviceText" placeholder="Write your message..." style="width:100%;min-height:120px;padding:10px;border-radius:8px;background:#000;color:var(--neon);border:1px solid rgba(0,255,153,0.06)"></textarea>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn" onclick="sendAdvice()">Send to WhatsApp</button>
+        <button class="btn" onclick="closeModal('modalAdvice')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- History small modal -->
+  <div class="modal-wrap" id="modalHistory">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalHistory')">✖</button>
+      <h2>My Journey</h2>
+      <p style="color:var(--muted);text-align:left">
+        I was born and raised in Kisumu, Kenya. Growing up I loved exploring technology and building tools.
+        I've created bots like QUEEN BELLA and TOXIC LOVER and continue to build useful automations and web apps.
+      </p>
+    </div>
+  </div>
+
+  <footer style="text-align:center;padding:12px;color:var(--muted);position:relative;z-index:1">
+    © 2025 Rodgers Onyango | Powered by RoyTech
   </footer>
 
-  <!-- POPUPS -->
-  <div class="popup" id="historyPopup">
-    <p><strong>My Journey:</strong> Born and raised in Kisumu, Kenya. Builder of QUEEN BELLA, Toxic Lover, and other tech projects.</p>
-    <button onclick="closePopup('historyPopup')">Close</button>
-  </div>
+<script>
+/* -------------------------
+   Utilities & UI wiring
+   ------------------------- */
+// Clock
+function updateClock(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString(); }
+setInterval(updateClock,1000); updateClock();
 
-  <div class="popup" id="botsPopup">
-    <p><strong>Choose a Bot:</strong></p>
-    <button onclick="window.open('https://github.com/Rodgers4/QUEEN-BELLA')">BELLA</button>
-    <button onclick="window.open('https://www.facebook.com/Taz254')">TOXIC</button>
-    <button onclick="closePopup('botsPopup')">Close</button>
-  </div>
+// Dark mode persisted
+const modeBtn = document.getElementById('modeBtn');
+const savedMode = localStorage.getItem('roytech_mode');
+if(savedMode === 'light') document.body.classList.add('light'), modeBtn.textContent='☀️';
+modeBtn.addEventListener('click', ()=>{
+  document.body.classList.toggle('light');
+  const isLight = document.body.classList.contains('light');
+  localStorage.setItem('roytech_mode', isLight ? 'light' : 'dark');
+  modeBtn.textContent = isLight ? '☀️' : '🌙';
+});
 
-  <div class="popup" id="ownerPopup">
-    <p><strong>Owner Info</strong><br>
-    Name: RODGERS ONYANGO<br>
-    Home: KISUMU, KENYA<br>
-    Status: SINGLE<br>
-    CONT: 0755660053<br>
-    AGE: 17 YEARS<br>
-    EDU: BACHELOR DEGREE<br>
-    INST: EGERTON.</p>
-    <button onclick="closePopup('ownerPopup')">Close</button>
-  </div>
+// Battery
+if(navigator.getBattery){
+  navigator.getBattery().then(b=>{
+    function setB(){ document.getElementById('battery').textContent = 'Battery: ' + Math.round(b.level*100) + '%'; }
+    setB(); b.addEventListener('levelchange', setB);
+  }).catch(()=>document.getElementById('battery').textContent='Battery: N/A');
+} else document.getElementById('battery').textContent='Battery: N/A';
 
-  <div class="popup" id="supportPopup">
-    <p><strong>Support Me:</strong><br>
-    Mpesa: 254716388654<br>
-    Paypal: rogersonyango87@gmail.com<br>
-    Airtel Money: 254755660053</p>
-    <button onclick="window.open('https://wa.me/254755660053')">Send Advice</button>
-    <button onclick="closePopup('supportPopup')">Close</button>
-  </div>
+// Weather (Open-Meteo; updates every 10 mins)
+async function fetchWeather(lat,lon){
+  try{
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+    const d = await res.json();
+    if(d && d.current_weather){
+      const t = d.current_weather.temperature;
+      const code = d.current_weather.weathercode;
+      let icon='☀️'; if(code>=1 && code<=3) icon='⛅'; else if(code>=45) icon='🌧️';
+      document.getElementById('weather').textContent = `${icon} ${t}°C • ${new Date().toLocaleDateString()}`;
+    } else document.getElementById('weather').textContent='Weather: unavailable';
+  }catch(e){ document.getElementById('weather').textContent='Weather: error'; }
+}
+function updateWeather(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(pos=>fetchWeather(pos.coords.latitude,pos.coords.longitude), ()=>document.getElementById('weather').textContent='Weather: blocked',{timeout:10000});
+  } else document.getElementById('weather').textContent='Weather: unsupported';
+}
+updateWeather(); setInterval(updateWeather, 10*60*1000);
 
-  <script>
-    // CLOCK
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').textContent =
-        now.toLocaleTimeString('en-GB');
-    }
-    setInterval(updateClock, 1000); updateClock();
+// Modal helpers
+function showModal(id){ document.getElementById(id).classList.add('show'); document.body.style.overflow='hidden'; }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); document.body.style.overflow=''; }
 
-    // BATTERY
-    if (navigator.getBattery) {
-      navigator.getBattery().then(battery => {
-        function updateBattery() {
-          document.getElementById('battery').textContent = `Battery: ${(battery.level * 100).toFixed(0)}%`;
-        }
-        battery.addEventListener('levelchange', updateBattery);
-        updateBattery();
-      });
-    }
+// Wire buttons
+document.getElementById('historyBtn').addEventListener('click', ()=> showModal('modalHistory'));
+document.getElementById('useBotsBtn').addEventListener('click', ()=> showModal('modalBots'));
+document.getElementById('ownerBtn').addEventListener('click', ()=> showModal('modalOwner'));
+document.getElementById('openCalc').addEventListener('click', ()=> showModal('modalCalc'));
+document.getElementById('openGame').addEventListener('click', ()=> { showModal('modalGame'); });
+document.getElementById('openCalendar').addEventListener('click', ()=> { showModal('modalCalendar'); generateCalendar(); });
+document.getElementById('openSupport').addEventListener('click', ()=> showModal('modalSupport'));
 
-    // WEATHER
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const { latitude, longitude } = pos.coords;
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m`)
-          .then(res => res.json())
-          .then(data => {
-            document.getElementById('weather').textContent =
-              `Weather: ${data.current.temperature_2m}°C`;
-          })
-          .catch(() => document.getElementById('weather').textContent = 'Weather unavailable');
-      });
-    }
+// Close modals on backdrop click
+document.querySelectorAll('.modal-wrap').forEach(mw=>{
+  mw.addEventListener('click', (e)=> { if(e.target === mw){ closeModal(mw.id); if(mw.id==='modalGame') resetGame(); }});
+});
 
-    // Dark Mode Toggle
-    function toggleDarkMode() {
-      document.body.classList.toggle('light-mode');
-    }
+// -------------------------
+// Calculator
+// -------------------------
+let calcExp = '';
+const calcDisplay = document.getElementById('calcDisplay');
+function calcInput(ch){
+  if(calcExp==='0' && ch !== '.') calcExp = ch; else calcExp += ch;
+  calcDisplay.textContent = calcExp || '0';
+}
+function clearCalc(){ calcExp=''; calcDisplay.textContent='0'; }
+function calculate(){
+  try{
+    if(!/^[0-9+\-*/().\s]+$/.test(calcExp)) throw 'bad';
+    const result = Function('"use strict";return ('+calcExp+')')();
+    calcExp = String(result);
+  } catch(e){ calcExp='Error'; }
+  calcDisplay.textContent = calcExp;
+}
+// keyboard support for calc modal
+window.addEventListener('keydown', (e)=>{
+  if(document.getElementById('modalCalc').classList.contains('show')){
+    if(/[\d+\-*/().]/.test(e.key)){ calcInput(e.key); e.preventDefault(); }
+    if(e.key === 'Enter'){ calculate(); e.preventDefault(); }
+    if(e.key === 'Backspace'){ calcExp = calcExp.slice(0,-1); calcDisplay.textContent = calcExp || '0'; e.preventDefault(); }
+    if(e.key === 'Escape'){ closeModal('modalCalc'); }
+  }
+});
 
-    function showHistory() { document.getElementById('historyPopup').classList.add('show'); }
-    function showBots() { document.getElementById('botsPopup').classList.add('show'); }
-    function showOwner() { document.getElementById('ownerPopup').classList.add('show'); }
-    function showSupport() { document.getElementById('supportPopup').classList.add('show'); }
-    function closePopup(id) { document.getElementById(id).classList.remove('show'); }
-  </script>
-</body>
-  </html>
+// -------------------------
+// Calendar (with basic month nav)
+// -------------------------
+let calYear = new Date().getFullYear(), cal
