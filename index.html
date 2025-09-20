@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="Rodgers Onyango - Portfolio & Projects">
   <meta property="og:title" content="Rodgers Onyango | Portfolio">
   <meta property="og:description" content="Explore Rodgers Onyango's projects, bots, and web creations.">
@@ -10,198 +10,215 @@
   <meta property="og:url" content="https://rodgersweb.vercel.app">
   <meta property="og:image" content="https://rodgersweb.vercel.app/preview.png">
   <title>Rodgers Onyango | Portfolio</title>
+
   <style>
+    /* ---------- base / background ---------- */
+    :root{
+      --bg1:#0f2027; --bg2:#203a43; --bg3:#2c5364;
+      --accent:#00ff99; --neon:#0ff; --glass: rgba(13,13,13,0.7);
+      --glass-2: rgba(0,0,0,0.6);
+      --button-green: #25D366;
+      --white: #fff; --black:#000;
+    }
+    html,body{height:100%; margin:0;font-family:Arial,Helvetica,sans-serif;}
+
+/* particle canvas behind content */
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      text-align: center;
-      transition: background 0.4s, color 0.4s;
+      position: relative;
+      min-height:100%;
+      color:var(--white);
+      transition: background 0.35s, color 0.35s;
+      background: linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+      overflow-x: hidden;
     }
-    .light-mode {
-      background: #f4f4f4;
-      color: #111;
-    }
-
-    header {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    /* Light mode variables */
+    body.light {
+      --bg1:#f4f7fb; --bg2:#eef2f7; --bg3:#e6eef9;
+      --accent:#006b4a; --neon:#006b4a; --glass: rgba(255,255,255,0.85); --glass-2: rgba(255,255,255,0.9);
+      color: #0b0b0b;
+      background: linear-gradient(135deg,#f4f7fb,#eef2f7,#e6eef9);
     }
 
-    h1 { margin: 0; font-size: 2.5rem; }
-
-    .clock {
-      font-size: 2rem;
-      margin-top: 10px;
-      color: #0ff;
-      text-shadow: 0 0 10px #0ff;
+    /* ---------- header ---------- */
+    header{
+      position: relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:18px 16px;
+      z-index: 5;
+      background: linear-gradient(180deg, rgba(0,0,0,0.36), rgba(0,0,0,0.15));
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.35);
     }
+    header .left-controls, header .right-controls { position: absolute; top: 16px; display:flex; gap:10px; align-items:center; }
+    header .left-controls { left: 12px; }
+    header .right-controls { right: 12px; }
 
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
+    .menu-btn { font-size:26px; cursor:pointer; background:none;border:none;color:var(--neon); }
+    .dark-btn { cursor:pointer;border:none;padding:8px;border-radius:8px;background:var(--glass-2);color:var(--white);font-weight:700; }
+    body.light .dark-btn{ background: rgba(0,0,0,0.06); color: #000; }
 
-    section { margin-bottom: 20px; }
+    header h1 {margin:0; font-size:1.6rem; letter-spacing:0.6px;}
+    .clock { font-size:1rem; color:var(--neon); text-shadow:0 0 8px rgba(0,255,153,0.07); }
+    .battery { font-size:0.9rem; color:var(--neon); margin-top:6px; }
+    .weather-small { font-size:0.9rem; color: #ffeb3b; margin-top:6px; }
 
-    h2 {
-      color: #0ff;
-      border-bottom: 2px solid #0ff;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #0ff;
-      color: #000;
-      border: none;
-      padding: 10px 15px;
-      margin: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      border-radius: 10px;
-      transition: 0.3s;
-      text-decoration: none;
-    }
-
-    .btn:hover { transform: scale(1.1); }
-
-    footer {
-      background: rgba(0,0,0,0.8);
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
-
-    /* Popup */
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: rgba(0, 0, 0, 0.95);
-      color: #0ff;
-      padding: 20px 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #0ff;
-      font-size: 1.3rem;
-      max-width: 400px;
-      line-height: 1.5;
-      text-align: left;
-      opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      z-index: 9999;
-    }
-    .popup.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-
-    .popup button {
-      margin-top: 10px;
-      display: block;
-      width: 100%;
-      background: #0ff;
-      border: none;
-      color: #000;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* Weather + Mode Toggle */
-    #weather-box {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      background: rgba(0,0,0,0.6);
-      color: #0ff;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 14px;
+    /* ---------- main content ---------- */
+    main{
+      position: relative;
+      z-index: 2;
+      max-width:900px;
+      margin: 28px auto;
+      background: var(--glass-2);
+      padding:22px;
+      border-radius:14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+      color:inherit;
       backdrop-filter: blur(6px);
     }
-    .light-mode #weather-box {
-      background: rgba(255,255,255,0.8);
-      color: #111;
-    }
-    #mode-toggle {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 14px;
-    }
-    .light-mode #mode-toggle {
-      background: rgba(0,0,0,0.1);
-      color: #000;
-    }
+    section{ margin-bottom:18px; }
+    h2{ color:var(--neon); display:inline-block; border-bottom:2px solid var(--neon); padding-bottom:6px; margin:0 0 8px 0; }
+    p{ line-height:1.5; }
 
-    /* Console */
-    #roytech-console {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(13, 13, 13, 0.7);
-      backdrop-filter: blur(12px);
-      color: #00ff99;
-      font-family: 'Courier New', monospace;
-      font-size: 16px;
-      padding: 20px;
-      border-top: 1px solid rgba(0,255,153,0.3);
-      box-shadow: 0px -4px 20px rgba(0, 255, 153, 0.3);
-      text-align: center;
+    .btn {
+      display:inline-block; text-decoration:none; font-weight:700;
+      background:var(--neon); color:var(--black); padding:10px 14px; border-radius:10px; margin:8px; transition:transform .18s;
     }
-    #roytech-screen {
-      min-height: 70px;
-      white-space: pre-wrap;
-      text-align: left;
+    .btn:hover{ transform:scale(1.05); }
+
+    /* ---------- history popup ---------- */
+    .popup {
+      position:fixed; left:50%; top:50%; transform:translate(-50%,-50%) scale(0);
+      background: rgba(0,0,0,0.96); color:var(--neon); padding:20px; border-radius:14px;
+      box-shadow:0 0 30px rgba(0,255,153,0.12); z-index:99999; opacity:0; transition:transform .25s, opacity .25s;
     }
-    #join-btn {
-      display: inline-block;
-      margin-top: 10px;
-      background: #25D366;
-      color: white;
-      font-weight: bold;
-      padding: 12px 28px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-size: 18px;
-      transition: transform 0.3s ease;
+    .popup.show{ transform:translate(-50%,-50%) scale(1); opacity:1; }
+    .popup button{ margin-top:10px; background:var(--neon); color:#000; border:none; padding:10px;border-radius:8px; cursor:pointer; }
+
+    /* ---------- drawer (sliding menu) ---------- */
+    .drawer {
+      position:fixed; top:0; left:-300px; width:300px; height:100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.96), rgba(0,0,0,0.92));
+      color:var(--white); z-index:99998; padding:18px; box-shadow: 3px 0 20px rgba(0,0,0,0.6);
+      transition:left .28s ease;
+      display:flex; flex-direction:column;
     }
-    #join-btn:hover { transform: scale(1.08); background:#1ebe57; }
-    #footer-console { font-size: 14px; opacity: 0.7; margin-top: 6px; }
+    .drawer.open{ left:0; }
+    .drawer h3{ margin:4px 0 12px 0; color:var(--neon); }
+    .drawer .item { background:var(--neon); color:#000; padding:10px 12px; border-radius:8px; margin:8px 0; text-align:left; cursor:pointer; border:none; font-weight:700; }
+    .drawer .small { font-size:0.9rem; color:#ddd; margin-top:10px; }
+    .drawer .support p{ margin:8px 0; color:#fff; }
+    .drawer .footer{ margin-top:auto; text-align:center; color:var(--neon); font-size:0.95rem; padding-top:12px; border-top:1px solid rgba(255,255,255,0.03); }
+
+    /* ---------- bottom console ---------- */
+    .console {
+      position:fixed; left:0; right:0; bottom:0; z-index:99997;
+      background: rgba(13,13,13,0.72); backdrop-filter: blur(10px); -webkit-backdrop-filter:blur(10px);
+      padding:18px; border-top:1px solid rgba(0,255,153,0.2);
+      box-shadow: 0 -6px 30px rgba(0,255,153,0.06);
+      font-family: "Courier New", monospace; color:var(--accent);
+      text-align:center;
+    }
+    #roytech-screen{ min-height:76px; text-align:left; white-space:pre-wrap; font-size:15px; }
+    .join-btn {
+      display:inline-block; margin-top:12px; background:var(--button-green); color:#fff; padding:12px 24px; border-radius:50px; font-weight:800; text-decoration:none;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.28); transition:transform .18s, box-shadow .18s;
+    }
+    .join-btn:hover{ transform:scale(1.06); box-shadow:0 8px 24px rgba(0,0,0,0.32); }
+    .console .footer { margin-top:8px; color: rgba(255,255,255,0.85); font-size:0.92rem; opacity:0.85; }
+
+    /* ---------- modals ---------- */
+    .modal-backdrop {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.72); z-index:999999; align-items:center; justify-content:center;
+    }
+    .modal-backdrop.show { display:flex; }
+    .modal {
+      background: rgba(2,2,3,0.98); color:var(--neon); padding:18px; border-radius:10px; width:94%; max-width:460px; box-shadow:0 0 18px rgba(0,255,153,0.08);
+      font-family:inherit;
+    }
+    .modal h3{ margin:0 0 8px 0; }
+    .modal .close { float:right; background:#ff5a5a; border:none;color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer; }
+
+    /* calculator buttons */
+    .calc-display{ background:#000; color:var(--neon); padding:12px; border-radius:8px; font-size:1.4rem; text-align:right; min-height:44px; }
+    .calc-keys { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; justify-content:space-between; }
+    .calc-keys button { flex: 1 1 22%; background:var(--neon); color:#000; border:none; padding:12px; border-radius:8px; font-weight:700; cursor:pointer; }
+
+    /* game canvas */
+    #gameCanvas { background:#000; display:block; margin:10px auto; border-radius:8px; border:2px solid rgba(0,255,153,0.08); }
+
+    /* calendar */
+    .calendar table{ width:100%; border-collapse:collapse; color:var(--neon); }
+    .calendar th, .calendar td{ padding:6px; border:1px solid rgba(0,255,153,0.12); text-align:center; }
+    .calendar th{ background:var(--neon); color:#000; }
+
+    /* small helper */
+    .muted { color: rgba(255,255,255,0.7); font-size:0.95rem; }
+    @media (max-width:600px){
+      header{ padding:12px 8px; }
+      .drawer{ width:86%; }
+      .menu-btn{ left:8px; }
+    }
   </style>
 </head>
 <body>
-  <!-- Weather + Mode Toggle -->
-  <div id="weather-box">📡 Loading weather...</div>
-  <button id="mode-toggle" onclick="toggleMode()">🌙 Dark</button>
+  <!-- particle background -->
+  <canvas id="particles"></canvas>
 
+  <!-- header with hamburger, title, clock, battery, weather and dark toggle -->
   <header>
-    <h1>Rodgers Onyango</h1>
-    <div class="clock" id="clock">00:00:00</div>
-    <div class="battery" id="battery">Battery: --%</div>
+    <div class="left-controls">
+      <button class="menu-btn" id="hamburger" aria-label="Open menu">☰</button>
+    </div>
+
+    <div style="text-align:center;">
+      <h1>Rodgers Onyango</h1>
+      <div class="clock" id="clock">00:00:00</div>
+      <div class="battery" id="battery">Battery: --%</div>
+      <!-- weather moved below battery -->
+      <div class="weather-small" id="weather">🌦️ Loading weather...</div>
+    </div>
+
+    <div class="right-controls">
+      <button class="dark-btn" id="modeToggle" title="Toggle dark/light">🌙</button>
+    </div>
   </header>
 
+  <!-- drawer menu -->
+  <nav class="drawer" id="drawer">
+    <h3>RoyTech Menu</h3>
+
+    <button class="item" id="openCalcBtn">🧮 Modern Calculator</button>
+    <button class="item" id="openGameBtn">🎮 Block Game</button>
+    <button class="item" id="openCalBtn">📅 Calendar</button>
+
+    <div style="margin-top:12px;">
+      <button class="item" id="openSupportBtn">💳 Support</button>
+      <div class="small muted" style="margin-top:10px;">
+        <div>Mpesa: <strong>254716388654</strong></div>
+        <div>Paypal: <strong>rogersonyango87@gmail.com</strong></div>
+        <div>AirtelMoney: <strong>254755660053</strong></div>
+      </div>
+    </div>
+
+    <div class="footer">⚡ Powered by RoyTech</div>
+  </nav>
+
+  <!-- main content (kept your original structure) -->
   <main>
     <section id="about">
       <h2>About Me</h2>
-      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools.</p>
-      <button class="btn" onclick="showHistory()">Read My Full History</button>
+      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools. My passion is making smart, automated systems that simplify people's lives.</p>
+      <button class="btn" id="historyBtn">Read My Full History</button>
     </section>
 
     <section id="projects">
@@ -213,112 +230,193 @@
 
     <section id="contact">
       <h2>Contact Me</h2>
-      <a href="https://www.instagram.com/Roy254_onyango" target="_blank" class="btn">Instagram</a>
-      <a href="https://www.tiktok.com/@_ouma4" target="_blank" class="btn">TikTok</a>
-      <a href="https://x.com/rogersonyango54" target="_blank" class="btn">Twitter (X)</a>
-      <a href="https://wa.me/254755660053" target="_blank" class="btn">WhatsApp</a>
-      <a href="https://www.facebook.com/Taz254" target="_blank" class="btn">Facebook</a>
-      <a href="mailto:rogersonyango87@gmail.com" target="_blank" class="btn">Gmail</a>
+      <a class="btn" href="https://www.instagram.com/Roy254_onyango" target="_blank">Instagram</a>
+      <a class="btn" href="https://www.tiktok.com/@_ouma4" target="_blank">TikTok</a>
+      <a class="btn" href="https://x.com/rogersonyango54" target="_blank">Twitter (X)</a>
+      <a class="btn" href="https://wa.me/254755660053" target="_blank">WhatsApp</a>
+      <a class="btn" href="https://www.facebook.com/Taz254" target="_blank">Facebook</a>
+      <a class="btn" href="mailto:rogersonyango87@gmail.com" target="_blank">Gmail</a>
     </section>
   </main>
 
-  <!-- Live Console -->
-  <div id="roytech-console">
-    <div id="roytech-screen"></div>
-    <a id="join-btn" href="https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e" target="_blank">🚀 Join RoyTech Team</a>
-    <div id="footer-console">Powered by RoyTech | ©2025</div>
-  </div>
+  <footer style="z-index:3;position:relative;">© 2025 Rodgers Onyango | Powered by RoyTech</footer>
 
-  <!-- History Popup -->
+  <!-- history popup -->
   <div class="popup" id="historyPopup">
     <p><strong>My Journey:</strong><br><br>
-    I was born and raised in Kisumu, Kenya. Growing up, I loved exploring technology and finding new ways to create things online.  
-    I built bots like QUEEN BELLA and Toxic Lover, and I continue learning and building every day with a vision to uplift my family and inspire others.</p>
+      I was born and raised in Kisumu, Kenya. Growing up, I loved exploring technology and finding new ways to create things online.
+      Over the years, I built bots like QUEEN BELLA and Toxic Lover, which connect with WhatsApp and Messenger users worldwide.
+      I continue learning and building every day, with a vision to use technology to uplift my family and inspire others.
+    </p>
     <button onclick="closeHistory()">Close</button>
   </div>
 
+  <!-- modal backdrops -->
+  <div class="modal-backdrop" id="modalBackdrop-calc">
+    <div class="modal" role="dialog" aria-labelledby="calcTitle">
+      <button class="close" onclick="closeModal('modalBackdrop-calc')">X</button>
+      <h3 id="calcTitle">RoyTech Calculator</h3>
+      <div class="calc-display" id="calcDisplay">0</div>
+      <div class="calc-keys" id="calcKeys">
+        <button onclick="calcInput('7')">7</button><button onclick="calcInput('8')">8</button><button onclick="calcInput('9')">9</button><button onclick="calcInput('/')">÷</button>
+        <button onclick="calcInput('4')">4</button><button onclick="calcInput('5')">5</button><button onclick="calcInput('6')">6</button><button onclick="calcInput('*')">×</button>
+        <button onclick="calcInput('1')">1</button><button onclick="calcInput('2')">2</button><button onclick="calcInput('3')">3</button><button onclick="calcInput('-')">−</button>
+        <button onclick="calcInput('0')">0</button><button onclick="calcInput('.')">.</button><button onclick="calculate()">=</button><button onclick="calcInput('+')">+</button>
+        <button style="flex:1 1 100%;background:#ff6666;color:#fff;" onclick="clearCalc()">C (Clear)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop-game">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalBackdrop-game')">X</button>
+      <h3>RoyTech Block Game</h3>
+      <p class="muted">Use ← and → to move. Avoid falling hazards and collect points.</p>
+      <canvas id="gameCanvas" width="320" height="320" style="display:block;margin:8px auto;border-radius:8px;"></canvas>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
+        <button onclick="startGame()" style="background:var(--neon);color:#000;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;">Start</button>
+        <button onclick="resetGame()" style="background:#ff6666;color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop-calendar">
+    <div class="modal" id="calendarModalContent">
+      <button class="close" onclick="closeModal('modalBackdrop-calendar')">X</button>
+      <h3>RoyTech Calendar</h3>
+      <div class="calendar" id="calendarWidget"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop-support">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalBackdrop-support')">X</button>
+      <h3>Support RoyTech</h3>
+      <p class="muted">Choose an option below:</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
+        <button onclick="copyText('254716388654')">📲 Mpesa: 254716388654 (Tap to copy)</button>
+        <button onclick="window.open('mailto:rogersonyango87@gmail.com')">💳 PayPal: rogersonyango87@gmail.com</button>
+        <button onclick="copyText('254755660053')">📱 AirtelMoney: 254755660053 (Tap to copy)</button>
+        <button id="adviceBtn">📝 Advice - send a message</button>
+      </div>
+      <div style="margin-top:10px;font-size:0.9rem;color:rgba(255,255,255,0.85);">Or message directly: <a href="https://wa.me/0755660053" target="_blank" style="color:var(--neon)">WhatsApp (0755660053)</a></div>
+    </div>
+  </div>
+
+  <!-- bottom live console -->
+  <div class="console" id="roytechConsole">
+    <div id="roytech-screen"></div>
+    <a class="join-btn" href="https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e" target="_blank">🚀 Join RoyTech Team</a>
+    <div class="footer">Powered by RoyTech | ©2025</div>
+  </div>
+
+  <!-- Advice modal (inline tiny form) -->
+  <div class="modal-backdrop" id="modalBackdrop-advice">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalBackdrop-advice')">X</button>
+      <h3>Leave Advice / Message</h3>
+      <textarea id="adviceText" placeholder="Write your message..." style="width:100%;min-height:120px;padding:8px;border-radius:8px;background:#000;color:var(--neon);border:1px solid rgba(0,255,153,0.08)"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button style="flex:1;background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;font-weight:700;" onclick="sendAdvice()">Send to WhatsApp</button>
+        <button style="flex:1;background:#ff6666;color:#fff;border:none;padding:10px;border-radius:8px;" onclick="closeModal('modalBackdrop-advice')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCRIPT ====== -->
   <script>
-    // Clock
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').textContent =
-        now.toLocaleTimeString('en-GB');
-    }
-    setInterval(updateClock, 1000); updateClock();
-
-    // Battery
-    if (navigator.getBattery) {
-      navigator.getBattery().then(battery => {
-        function updateBattery() {
-          document.getElementById('battery').textContent =
-            `Battery: ${(battery.level * 100).toFixed(0)}%`;
-        }
-        battery.addEventListener('levelchange', updateBattery);
-        updateBattery();
-      });
-    }
-
-    // Dark / Light Mode
-    function toggleMode() {
-      document.body.classList.toggle("light-mode");
-      document.getElementById("mode-toggle").innerText =
-        document.body.classList.contains("light-mode") ? "🌞 Light" : "🌙 Dark";
-    }
-
-    // Weather
-    function updateWeather(lat, lon) {
-      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
-        .then(res => res.json())
-        .then(data => {
-          const weather = data.current_weather;
-          const today = new Date().toLocaleDateString();
-          document.getElementById("weather-box").innerHTML =
-            `📅 ${today} | 🌡️ ${weather.temperature}°C | ${weather.weathercode < 3 ? "☀️ Clear" : "☁️ Cloudy"}`;
-        })
-        .catch(() => document.getElementById("weather-box").innerText = "⚠️ Weather unavailable");
-    }
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        pos => updateWeather(pos.coords.latitude, pos.coords.longitude),
-        () => document.getElementById("weather-box").innerText = "⚠️ Location blocked"
-      );
-    }
-
-    // History Popup
-    function showHistory() {
-      document.getElementById('historyPopup').classList.add('show');
-    }
-    function closeHistory() {
-      document.getElementById('historyPopup').classList.remove('show');
-    }
-
-    // Live typing
-    const textLines = [
-      "🔧 Booting up RoyTech console...",
-      "💡 Connecting tech innovators worldwide...",
-      "🛠️ Building WhatsApp bots, Web Apps & AI tools...",
-      "🤖 Bringing automation to life...",
-      "📢 Join a growing tech community!",
-      "🎯 Learn. Build. Collaborate. Innovate.",
-      "🔥 Be part of the future with RoyTech!"
-    ];
-    const screen = document.getElementById("roytech-screen");
-    let lineIndex = 0, charIndex = 0;
-    function typeLine() {
-      if (lineIndex < textLines.length) {
-        if (charIndex < textLines[lineIndex].length) {
-          screen.innerHTML += textLines[lineIndex][charIndex];
-          charIndex++;
-          setTimeout(typeLine, 45);
-        } else {
-          screen.innerHTML += "\n";
-          lineIndex++;
-          charIndex = 0;
-          setTimeout(typeLine, 350);
-        }
+  /* ---------- particles background ---------- */
+  (function(){
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let w = canvas.width = innerWidth;
+    let h = canvas.height = innerHeight;
+    const N = Math.floor((w*h)/90000); // density
+    const pts = [];
+    function rand(min,max){return Math.random()*(max-min)+min;}
+    for(let i=0;i<N;i++) pts.push({x:rand(0,w), y:rand(0,h), vx:rand(-0.25,0.25), vy:rand(-0.2,0.2), size:rand(0.4,1.6)});
+    function frame(){
+      ctx.clearRect(0,0,w,h);
+      for(let p of pts){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x<0) p.x=w; if(p.x>w) p.x=0;
+        if(p.y<0) p.y=h; if(p.y>h) p.y=0;
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(0,255,153,0.06)';
+        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.fill();
       }
+      requestAnimationFrame(frame);
     }
-    typeLine();
-  </script>
-</body>
-  </html>
+    addEventListener('resize', ()=>{ w = canvas.width = innerWidth; h = canvas.height = innerHeight; });
+    frame();
+  })();
+
+  /* ---------- header: clock & battery & weather ---------- */
+  function updateClock(){
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString();
+  }
+  setInterval(updateClock,1000); updateClock();
+
+  if(navigator.getBattery){
+    navigator.getBattery().then(bat=>{
+      function setB(){ document.getElementById('battery').textContent = 'Battery: ' + Math.round(bat.level*100) + '%'; }
+      bat.addEventListener('levelchange', setB); setB();
+    });
+  } else {
+    document.getElementById('battery').textContent = 'Battery: N/A';
+  }
+
+  // Weather (Open-Meteo) using geolocation
+  function fetchWeather(lat,lon){
+    // open-meteo current weather (no API key)
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+      .then(r=>r.json())
+      .then(d=>{
+        if(d && d.current_weather){
+          const t = d.current_weather.temperature;
+          // interpret weathercode roughly:
+          const code = d.current_weather.weathercode;
+          let emoji = "☀️";
+          if(code >= 1 && code <= 3) emoji="⛅";
+          else if(code >=45 && code <= 99) emoji="🌧️";
+          document.getElementById('weather').textContent = `${emoji} ${t}°C • ${new Date().toLocaleDateString()}`;
+        } else {
+          document.getElementById('weather').textContent = 'Weather unavailable';
+        }
+      }).catch(()=> document.getElementById('weather').textContent = 'Weather unavailable');
+  }
+
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(pos=>{
+      fetchWeather(pos.coords.latitude, pos.coords.longitude);
+    }, err=>{
+      document.getElementById('weather').textContent = 'Location blocked';
+    },{timeout:10000});
+  } else {
+    document.getElementById('weather').textContent = 'Location not supported';
+  }
+
+  /* ---------- drawer open/close ---------- */
+  const drawer = document.getElementById('drawer');
+  document.getElementById('hamburger').addEventListener('click', ()=> drawer.classList.toggle('open'));
+
+  /* ---------- history popup ---------- */
+  const historyBtn = document.getElementById('historyBtn');
+  const historyPopup = document.getElementById('historyPopup');
+  historyBtn.addEventListener('click', ()=> historyPopup.classList.add('show'));
+  function closeHistory(){ historyPopup.classList.remove('show'); }
+
+  /* ---------- dark/light toggle ---------- */
+  const modeToggle = document.getElementById('modeToggle');
+  modeToggle.addEventListener('click', ()=>{
+    document.body.classList.toggle('light');
+    modeToggle.textContent = document.body.classList.contains('light') ? '🌞' : '🌙';
+  });
+
+  /* ---------- modals open/close ---------- */
+  function openModal(id){ document.getElementById(id).classList.add('show'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+  document.getElementById('openCalcBtn').addEventListener('click', ()=>{
+    document.getElementById('modalBackdrop-calc').cl
