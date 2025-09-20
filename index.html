@@ -18,14 +18,6 @@
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: #fff;
       text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    body.loaded {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     header {
@@ -123,36 +115,6 @@
     }
 
     .battery { margin-top: 10px; font-size: 1rem; color: #0ff; }
-
-    /* Social Feed Styles */
-    .social-container {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      gap: 15px;
-      margin-top: 25px;
-      text-align: left;
-    }
-    .social-card {
-      background: rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 0 10px rgba(0,255,255,0.3);
-    }
-    .social-card h3 {
-      margin-top: 0;
-      color: #0ff;
-    }
-    .social-post {
-      background: rgba(0,0,0,0.3);
-      padding: 10px;
-      border-radius: 8px;
-      margin: 10px 0;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .social-post:hover {
-      background: rgba(0,255,255,0.2);
-    }
   </style>
 </head>
 <body>
@@ -187,36 +149,11 @@
       <a href="https://wa.me/254755660053" target="_blank" class="btn">WhatsApp</a>
       <a href="https://www.facebook.com/Taz254" target="_blank" class="btn">Facebook</a>
       <a href="mailto:rogersonyango87@gmail.com" target="_blank" class="btn">Gmail</a>
-      <button class="btn" onclick="launchWithPopup('Launching Queen Bella...', 'https://queen-bella-e7ej.onrender.com')">Queen Bella</button>
-      <button class="btn" onclick="launchWithPopup('Launching Toxic Lover...', 'https://www.facebook.com/Taz254')">Toxic Lover</button>
-    </section>
-
-    <!-- SOCIAL FEED INTERFACE -->
-    <section id="social-feed">
-      <h2>Live Interface</h2>
-      <div class="social-container">
-        <div class="social-card">
-          <h3>Stories</h3>
-          <div class="social-post" onclick="showFeedPopup('Story 1 Clicked')">Story 1</div>
-          <div class="social-post" onclick="showFeedPopup('Story 2 Clicked')">Story 2</div>
-          <div class="social-post" onclick="showFeedPopup('Story 3 Clicked')">Story 3</div>
-        </div>
-        <div class="social-card">
-          <h3>Feed</h3>
-          <div class="social-post" onclick="showFeedPopup('You opened the first post!')">Sample Post: This is how your feed will look.</div>
-          <div class="social-post" onclick="showFeedPopup('You opened another post!')">Another post in your feed preview.</div>
-        </div>
-        <div class="social-card">
-          <h3>Suggestions</h3>
-          <div class="social-post" onclick="showFeedPopup('No new requests right now')">Friend Request: None</div>
-          <div class="social-post" onclick="showFeedPopup('Suggested User 1 Profile Opened')">Suggested User 1</div>
-        </div>
-      </div>
     </section>
   </main>
 
   <footer>
-    <p>POWERED BY ROYTECH ©2025</p>
+    <p>© 2025 Rodgers Onyango | Powered by RoyTech</p>
   </footer>
 
   <!-- Popup for history -->
@@ -228,15 +165,47 @@
     <button onclick="closeHistory()">Close</button>
   </div>
 
-  <!-- General Popup -->
+  <!-- Popup for "RoyTech Loading" -->
   <div class="popup" id="popup">RoyTech Loading...</div>
 
-  <script>
-    // Fade-in effect
-    window.addEventListener("load", () => {
-      document.body.classList.add("loaded");
-    });
+  <!-- ✅ RoyTech Live Console + Join Button -->
+  <div style="
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(13, 13, 13, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #00ff99;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    padding: 20px;
+    border-top: 1px solid rgba(0,255,153,0.3);
+    box-shadow: 0px -4px 20px rgba(0, 255, 153, 0.3);
+    z-index: 9999;
+    text-align: center;
+  ">
+    <div id="roytech-screen" style="min-height: 70px; white-space: pre-wrap; text-align:left;"></div>
+    <a href="https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e" target="_blank" style="
+      display: inline-block;
+      margin-top: 12px;
+      background: #25D366;
+      color: white;
+      font-weight: bold;
+      padding: 12px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 18px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    " onmouseover="this.style.transform='scale(1.08)';this.style.background='#1ebe57';this.style.boxShadow='0px 4px 18px rgba(0,255,153,0.6)'" 
+       onmouseout="this.style.transform='scale(1)';this.style.background='#25D366';this.style.boxShadow='0px 4px 15px rgba(0,0,0,0.4)'">
+      🚀 Join RoyTech Team
+    </a>
+  </div>
 
+  <script>
     // Clock
     function updateClock() {
       const now = new Date();
@@ -258,13 +227,17 @@
       });
     }
 
-    function showPopup(message = "RoyTech Loading...") {
+    // RoyTech popup on button clicks
+    const allBtns = document.querySelectorAll('.btn');
+    allBtns.forEach(btn => btn.addEventListener('click', () => showPopup()));
+
+    function showPopup() {
       const popup = document.getElementById('popup');
-      popup.textContent = message;
       popup.classList.add('show');
       setTimeout(() => popup.classList.remove('show'), 2000);
     }
 
+    // History modal
     function showHistory() {
       document.getElementById('historyPopup').classList.add('show');
     }
@@ -272,14 +245,35 @@
       document.getElementById('historyPopup').classList.remove('show');
     }
 
-    function showFeedPopup(message) {
-      showPopup(message);
-    }
+    // Live typing effect
+    const textLines = [
+      "🔧 Booting up RoyTech console...",
+      "💡 Connecting tech innovators worldwide...",
+      "🛠️ Building WhatsApp bots, Web Apps & AI tools...",
+      "🤖 Bringing automation to life...",
+      "📢 Join a growing tech community!",
+      "🎯 Learn. Build. Collaborate. Innovate.",
+      "🔥 Be part of the future with RoyTech!"
+    ];
 
-    function launchWithPopup(message, url) {
-      showPopup(message);
-      setTimeout(() => window.open(url, "_blank"), 2200);
+    const screen = document.getElementById("roytech-screen");
+    let lineIndex = 0, charIndex = 0;
+
+    function typeLine() {
+      if (lineIndex < textLines.length) {
+        if (charIndex < textLines[lineIndex].length) {
+          screen.innerHTML += textLines[lineIndex][charIndex];
+          charIndex++;
+          setTimeout(typeLine, 45);
+        } else {
+          screen.innerHTML += "\n";
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(typeLine, 350);
+        }
+      }
     }
+    typeLine();
   </script>
 </body>
   </html>
