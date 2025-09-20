@@ -1,345 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Rodgers Onyango - Portfolio & Projects">
-  <meta property="og:title" content="Rodgers Onyango | Portfolio">
-  <meta property="og:description" content="Explore Rodgers Onyango's projects, bots, and web creations.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://rodgersweb.vercel.app">
-  <meta property="og:image" content="https://rodgersweb.vercel.app/preview.png">
-  <title>Rodgers Onyango | Portfolio</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoyTech Website</title>
   <style>
-    :root{
-      --bg1:#0f2027; --bg2:#203a43; --bg3:#2c5364;
-      --accent:#00ff99; --neon:#0ff; --glass: rgba(13,13,13,0.7);
-      --glass-2: rgba(0,0,0,0.6);
-      --button-green:#25D366;
-      --white:#fff; --black:#000;
+    body {
+      margin: 0;
+      font-family: monospace, Arial, sans-serif;
+      background: #0a0a0a;
+      color: #00ffcc;
+      transition: background 0.3s, color 0.3s;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--white);}
-    body{background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));transition:background .35s,color .35s;overflow-x:hidden}
-
-/* particles canvas */
-    #particles{position:fixed;inset:0;z-index:0}
-
-/* header */
-    header{position:relative;display:flex;align-items:center;justify-content:center;padding:18px 16px;z-index:5;
-      background: linear-gradient(180deg, rgba(0,0,0,0.36), rgba(0,0,0,0.15));
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      box-shadow:0 2px 12px rgba(0,0,0,0.35);
+    .light-mode {
+      background: #f4f4f4;
+      color: #222;
     }
-    .left-controls,.right-controls{position:absolute;top:14px;display:flex;gap:10px;align-items:center}
-    .left-controls{left:12px}
-    .right-controls{right:12px}
-    .menu-btn{font-size:26px;cursor:pointer;background:none;border:none;color:var(--neon)}
-    .dark-btn{cursor:pointer;border:none;padding:8px;border-radius:8px;background:rgba(0,0,0,0.08);color:var(--white);font-weight:700}
-    header h1{margin:0;font-size:1.6rem;letter-spacing:.6px}
-    .clock{font-size:1rem;color:var(--neon);text-shadow:0 0 8px rgba(0,255,153,.07)}
-    .battery{font-size:.9rem;color:var(--neon);margin-top:6px}
-    .weather-small{font-size:.9rem;color:#ffeb3b;margin-top:6px}
-
-/* main */
-    main{position:relative;z-index:2;max-width:900px;margin:28px auto;background:var(--glass-2);padding:22px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.45);backdrop-filter:blur(6px)}
-    h2{color:var(--neon);display:inline-block;border-bottom:2px solid var(--neon);padding-bottom:6px;margin:0 0 8px 0}
-    p{line-height:1.5}
-    .btn{display:inline-block;text-decoration:none;font-weight:700;background:var(--neon);color:var(--black);padding:10px 14px;border-radius:10px;margin:8px;transition:transform .18s}
-    .btn:hover{transform:scale(1.05)}
-
-/* popup history */
-    .popup{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);background:rgba(0,0,0,.96);color:var(--neon);padding:20px;border-radius:14px;box-shadow:0 0 30px rgba(0,255,153,.12);z-index:99999;opacity:0;transition:transform .25s,opacity .25s}
-    .popup.show{transform:translate(-50%,-50%) scale(1);opacity:1}
-    .popup button{margin-top:10px;background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer}
-
-/* drawer */
-    .drawer{position:fixed;top:0;left:-320px;width:320px;height:100%;background:linear-gradient(180deg,rgba(0,0,0,.96),rgba(0,0,0,.92));color:var(--white);z-index:99998;padding:18px;display:flex;flex-direction:column;transition:left .28s}
-    .drawer.open{left:0}
-    .drawer h3{color:var(--neon);margin:6px 0 12px 0}
-    .drawer .item{background:var(--neon);color:#000;padding:10px;border-radius:8px;margin:8px 0;border:none;cursor:pointer;font-weight:800;text-align:left}
-    .drawer .supportInfo{margin-top:10px;color:#ddd;font-size:0.95rem}
-    .drawer .footer{margin-top:auto;text-align:center;color:var(--neon);font-size:.95rem;padding-top:12px;border-top:1px solid rgba(255,255,255,.03)}
-
-/* console bottom */
-    .console{position:fixed;left:0;right:0;bottom:0;z-index:99997;background:rgba(13,13,13,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:18px;border-top:1px solid rgba(0,255,153,.2);box-shadow:0 -6px 30px rgba(0,255,153,.06);font-family:"Courier New",monospace;color:var(--accent);text-align:center}
-    #roytech-screen{min-height:76px;text-align:left;white-space:pre-wrap;font-size:15px}
-    .join-btn{display:inline-block;margin-top:12px;background:var(--button-green);color:#fff;padding:12px 24px;border-radius:50px;font-weight:800;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.28);transition:transform .18s}
-    .join-btn:hover{transform:scale(1.06)}
-    .console .footer{margin-top:8px;color:rgba(255,255,255,.85);font-size:.92rem;opacity:.85}
-
-/* modal full-screen */
-    .modal-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100000;align-items:center;justify-content:center;padding:18px}
-    .modal-wrap.show{display:flex}
-    .modal{width:100%;max-width:980px;background:linear-gradient(180deg,#081014,#0b0b0b);border-radius:12px;padding:18px;color:var(--neon);box-shadow:0 8px 40px rgba(0,0,0,.7);position:relative}
-    .modal h3{margin:0 0 8px 0}
-    .modal .close{position:absolute;right:14px;top:14px;background:#ff5a5a;border:none;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer}
-
-/* calculator */
-    .calc-display{background:#000;color:var(--neon);padding:12px;border-radius:8px;font-size:1.6rem;text-align:right;min-height:48px}
-    .calc-keys{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-    .calc-keys button{flex:1 1 22%;background:var(--neon);border:none;color:#000;padding:12px;border-radius:8px;font-weight:800;cursor:pointer}
-
-/* game */
-    #gameCanvas{background:#010101;border-radius:8px;display:block;margin:12px auto;border:2px solid rgba(0,255,153,.06)}
-
-/* calendar */
-    .calendar table{width:100%;border-collapse:collapse;color:var(--neon)}
-    .calendar th,.calendar td{padding:8px;border:1px solid rgba(0,255,153,.06);text-align:center}
-    .calendar th{background:var(--neon);color:#000}
-
-/* responsive */
-    @media(max-width:720px){
-      .drawer{width:86%}
-      .modal{padding:12px}
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background: rgba(0, 0, 0, 0.8);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .menu-icon {
+      font-size: 26px;
+      cursor: pointer;
+    }
+    .right-icons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dark-toggle {
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #00ffcc;
+      border-radius: 6px;
+    }
+    /* Weather */
+    .battery-weather {
+      position: fixed;
+      top: 40px;
+      left: 10px;
+      font-size: 14px;
+    }
+    /* Typing Effect Section */
+    .typing-section {
+      position: fixed;
+      bottom: 60px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      padding: 10px;
+    }
+    .join-btn {
+      margin-top: 10px;
+      background: #00ffcc;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    /* Footer */
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+    /* Drawer Menu */
+    .drawer {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: #111;
+      transition: left 0.3s ease-in-out;
+      z-index: 1500;
+      padding: 20px;
+    }
+    .drawer.open {
+      left: 0;
+    }
+    .drawer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .drawer li {
+      padding: 10px 0;
+      border-bottom: 1px solid #333;
+      cursor: pointer;
+    }
+    .drawer-footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+    .modal-content {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
-  <!-- particles -->
-  <canvas id="particles"></canvas>
-
-  <!-- header -->
   <header>
-    <div class="left-controls">
-      <button class="menu-btn" id="hamburger" aria-label="Open menu">☰</button>
-    </div>
-
-    <div style="text-align:center;">
-      <h1>Rodgers Onyango</h1>
-      <div class="clock" id="clock">00:00:00</div>
-      <div class="battery" id="battery">Battery: --%</div>
-      <div class="weather-small" id="weather">🌦️ Loading weather...</div>
-    </div>
-
-    <div class="right-controls">
-      <button class="dark-btn" id="modeToggle" title="Toggle dark/light">🌙</button>
+    <span class="menu-icon" onclick="toggleDrawer()">☰</span>
+    <div class="right-icons">
+      <span class="dark-toggle" onclick="toggleDarkMode()">🌓</span>
     </div>
   </header>
 
-  <!-- drawer -->
-  <nav class="drawer" id="drawer">
-    <h3>RoyTech Menu</h3>
+  <div class="battery-weather" id="weather">Loading weather...</div>
 
-    <button class="item" id="openCalc">🧮 Modern Calculator</button>
-    <button class="item" id="openGame">🎮 Block Game</button>
-    <button class="item" id="openCalendar">📅 Calendar</button>
-    <button class="item" id="openSupport">💳 Support</button>
-
-    <div class="supportInfo">
-      <div>Mpesa: <strong>254716388654</strong></div>
-      <div>Paypal: <strong>rogersonyango87@gmail.com</strong></div>
-      <div>AirtelMoney: <strong>254755660053</strong></div>
-    </div>
-
-    <div class="footer">⚡ Powered by RoyTech | ©2025</div>
-  </nav>
-
-  <!-- main content (original structure preserved) -->
-  <main>
-    <header style="display:none"></header> <!-- placeholder to keep original semantics -->
-    <section id="about">
-      <h2>About Me</h2>
-      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools. My passion is making smart, automated systems that simplify people's lives.</p>
-      <button class="btn" id="historyBtn">Read My Full History</button>
-    </section>
-
-    <section id="projects">
-      <h2>Projects</h2>
-      <p><strong>QUEEN BELLA:</strong> WhatsApp bot with real-time status viewing, reactions, and automations.</p>
-      <p><strong>Toxic Lover:</strong> Facebook Messenger AI chatbot using Gemini + Groq AI.</p>
-      <p><strong>Portfolio Website:</strong> Built with HTML, CSS, deployed on Vercel + GitHub Pages.</p>
-    </section>
-
-    <section id="contact">
-      <h2>Contact Me</h2>
-      <a class="btn" href="https://www.instagram.com/Roy254_onyango" target="_blank">Instagram</a>
-      <a class="btn" href="https://www.tiktok.com/@_ouma4" target="_blank">TikTok</a>
-      <a class="btn" href="https://x.com/rogersonyango54" target="_blank">Twitter (X)</a>
-      <a class="btn" href="https://wa.me/254755660053" target="_blank">WhatsApp</a>
-      <a class="btn" href="https://www.facebook.com/Taz254" target="_blank">Facebook</a>
-      <a class="btn" href="mailto:rogersonyango87@gmail.com" target="_blank">Gmail</a>
-    </section>
-  </main>
-
-  <footer style="z-index:3;position:relative">© 2025 Rodgers Onyango | Powered by RoyTech</footer>
-
-  <!-- history popup -->
-  <div class="popup" id="historyPopup">
-    <p><strong>My Journey:</strong><br><br>
-      I was born and raised in Kisumu, Kenya. Growing up, I loved exploring technology and finding new ways to create things online.
-      Over the years, I built bots like QUEEN BELLA and Toxic Lover, which connect with WhatsApp and Messenger users worldwide.
-      I continue learning and building every day, with a vision to use technology to uplift my family and inspire others.
-    </p>
-    <button onclick="closeHistory()">Close</button>
+  <!-- Typing Section -->
+  <div class="typing-section">
+    <span id="typing-text"></span><br />
+    <button class="join-btn" onclick="window.open('https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e','_blank')">
+      Join RoyTech Team
+    </button>
   </div>
 
-  <!-- MODALS: Calculator / Game / Calendar / Support / Advice -->
-  <div class="modal-wrap" id="modalCalc">
-    <div class="modal">
-      <button class="close" onclick="closeModal('modalCalc')">X</button>
-      <h3>RoyTech Calculator</h3>
-      <div class="calc-display" id="calcDisplay">0</div>
-      <div class="calc-keys" id="calcKeys">
-        <button onclick="calcInput('7')">7</button><button onclick="calcInput('8')">8</button><button onclick="calcInput('9')">9</button><button onclick="calcInput('/')">÷</button>
-        <button onclick="calcInput('4')">4</button><button onclick="calcInput('5')">5</button><button onclick="calcInput('6')">6</button><button onclick="calcInput('*')">×</button>
-        <button onclick="calcInput('1')">1</button><button onclick="calcInput('2')">2</button><button onclick="calcInput('3')">3</button><button onclick="calcInput('-')">−</button>
-        <button onclick="calcInput('0')">0</button><button onclick="calcInput('.')">.</button><button onclick="calculate()">=</button><button onclick="calcInput('+')">+</button>
-        <button style="flex:1 1 100%;background:#ff6666;color:#fff" onclick="clearCalc()">C</button>
+  <footer>Powered by RoyTech | ©2025</footer>
+
+  <!-- Drawer Menu -->
+  <div class="drawer" id="drawer">
+    <ul>
+      <li onclick="openModal('calcModal')">🧮 Calculator</li>
+      <li onclick="openModal('gameModal')">🎮 Block Game</li>
+      <li onclick="openModal('calendarModal')">📅 Calendar</li>
+      <li onclick="openModal('supportModal')">💬 Support</li>
+    </ul>
+    <div class="drawer-footer">Powered by RoyTech</div>
+  </div>
+
+  <!-- Calculator Modal -->
+  <div class="modal" id="calcModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('calcModal')">✖</span>
+      <h3>Calculator</h3>
+      <input type="text" id="calcDisplay" readonly style="width: 100%; font-size: 20px;" /><br />
+      <div>
+        <button onclick="appendCalc('7')">7</button>
+        <button onclick="appendCalc('8')">8</button>
+        <button onclick="appendCalc('9')">9</button>
+        <button onclick="appendCalc('/')">÷</button><br />
+        <button onclick="appendCalc('4')">4</button>
+        <button onclick="appendCalc('5')">5</button>
+        <button onclick="appendCalc('6')">6</button>
+        <button onclick="appendCalc('*')">×</button><br />
+        <button onclick="appendCalc('1')">1</button>
+        <button onclick="appendCalc('2')">2</button>
+        <button onclick="appendCalc('3')">3</button>
+        <button onclick="appendCalc('-')">−</button><br />
+        <button onclick="appendCalc('0')">0</button>
+        <button onclick="clearCalc()">C</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="appendCalc('+')">+</button>
       </div>
-      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
     </div>
   </div>
 
-  <div class="modal-wrap" id="modalGame">
-    <div class="modal">
-      <button class="close" onclick="closeModal('modalGame')">X</button>
-      <h3>RoyTech Block Game</h3>
-      <p style="color:rgba(255,255,255,.8)">Use ← → to move, ↑ to rotate, ↓ to drop faster. Avoid collisions and score points.</p>
-      <canvas id="gameCanvas" width="320" height="320" style="display:block;margin:12px auto;border-radius:8px;"></canvas>
-      <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
-        <button onclick="startGame()" style="background:var(--neon);color:#000;padding:8px 12px;border-radius:8px;border:none;cursor:pointer">Start</button>
-        <button onclick="resetGame()" style="background:#ff6666;color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer">Reset</button>
-      </div>
-      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
+  <!-- Game Modal -->
+  <div class="modal" id="gameModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('gameModal')">✖</span>
+      <h3>Block Game</h3>
+      <canvas id="blockGame" width="300" height="400" style="background:#000"></canvas>
     </div>
   </div>
 
-  <div class="modal-wrap" id="modalCalendar">
-    <div class="modal">
-      <button class="close" onclick="closeModal('modalCalendar')">X</button>
-      <h3>RoyTech Calendar</h3>
-      <div class="calendar" id="calendarWidget"></div>
-      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
+  <!-- Calendar Modal -->
+  <div class="modal" id="calendarModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('calendarModal')">✖</span>
+      <h3>Calendar</h3>
+      <div id="calendar"></div>
     </div>
   </div>
 
-  <div class="modal-wrap" id="modalSupport">
-    <div class="modal">
-      <button class="close" onclick="closeModal('modalSupport')">X</button>
-      <h3>Support RoyTech</h3>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-        <button onclick="copyText('254716388654')" style="background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer">📲 Mpesa: 254716388654 (Tap to copy)</button>
-        <button onclick="window.open('mailto:rogersonyango87@gmail.com')" style="background:#ddd;color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer">💳 PayPal: rogersonyango87@gmail.com</button>
-        <button onclick="copyText('254755660053')" style="background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer">📱 AirtelMoney: 254755660053 (Tap to copy)</button>
-        <button id="openAdvice" style="background:#00a3ff;color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer">📝 Advice - leave a message</button>
-      </div>
-      <div style="margin-top:12px;color:rgba(255,255,255,.85)">Or message directly: <a href="https://wa.me/254755660053" target="_blank" style="color:var(--neon)">WhatsApp (0755660053)</a></div>
-      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
+  <!-- Support Modal -->
+  <div class="modal" id="supportModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('supportModal')">✖</span>
+      <h3>Support</h3>
+      <p>M-Pesa: 254716388654</p>
+      <p>PayPal: rogersonyango87@gmail.com</p>
+      <p>Airtel Money: 254755660053</p>
+      <textarea id="supportMsg" placeholder="Leave a message"></textarea><br />
+      <button onclick="sendWhatsApp()">Send to WhatsApp</button>
     </div>
-  </div>
-
-  <!-- Advice modal -->
-  <div class="modal-wrap" id="modalAdvice">
-    <div class="modal">
-      <button class="close" onclick="closeModal('modalAdvice')">X</button>
-      <h3>Leave Advice / Message</h3>
-      <textarea id="adviceText" placeholder="Write your message..." style="width:100%;min-height:120px;padding:10px;border-radius:8px;background:#000;color:var(--neon);border:1px solid rgba(0,255,153,0.08)"></textarea>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button onclick="sendAdvice()" style="flex:1;background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;font-weight:700">Send to WhatsApp</button>
-        <button onclick="closeModal('modalAdvice')" style="flex:1;background:#ff6666;color:#fff;border:none;padding:10px;border-radius:8px">Cancel</button>
-      </div>
-      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
-    </div>
-  </div>
-
-  <!-- bottom console -->
-  <div class="console" id="roytechConsole">
-    <div id="roytech-screen"></div>
-    <a class="join-btn" href="https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e" target="_blank">🚀 Join RoyTech Team</a>
-    <div class="footer">Powered by RoyTech | ©2025</div>
   </div>
 
   <script>
-  /* ---------- particles ---------- */
-  (function(){
-    const c = document.getElementById('particles'), ctx = c.getContext('2d');
-    let w = c.width = innerWidth, h = c.height = innerHeight;
-    let pts = [];
-    const N = Math.max(30, Math.floor((w*h)/100000));
-    const rand=(a,b)=>Math.random()*(b-a)+a;
-    for(let i=0;i<N;i++) pts.push({x:rand(0,w),y:rand(0,h),vx:rand(-0.3,0.3),vy:rand(-0.2,0.2),r:rand(0.6,1.6)});
-    addEventListener('resize', ()=>{ w=c.width=innerWidth; h=c.height=innerHeight; });
-    (function frame(){
-      ctx.clearRect(0,0,w,h);
-      for(let p of pts){
-        p.x+=p.vx; p.y+=p.vy;
-        if(p.x<0) p.x=w; if(p.x>w) p.x=0; if(p.y<0) p.y=h; if(p.y>h) p.y=0;
-        ctx.beginPath(); ctx.fillStyle='rgba(0,255,153,0.06)'; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+    // Drawer
+    function toggleDrawer() {
+      document.getElementById('drawer').classList.toggle('open');
+    }
+
+    // Dark/Light Mode
+    function toggleDarkMode() {
+      document.body.classList.toggle('light-mode');
+    }
+
+    // Modals
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    // Calculator
+    function appendCalc(val) {
+      document.getElementById('calcDisplay').value += val;
+    }
+    function clearCalc() {
+      document.getElementById('calcDisplay').value = '';
+    }
+    function calculate() {
+      try {
+        document.getElementById('calcDisplay').value = eval(document.getElementById('calcDisplay').value);
+      } catch {
+        document.getElementById('calcDisplay').value = 'Error';
       }
-      requestAnimationFrame(frame);
-    })();
-  })();
+    }
 
-  /* ---------- clock ---------- */
-  function updateClock(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString(); }
-  setInterval(updateClock,1000); updateClock();
+    // Typing Effect
+    const text = "RoyTech builds modern solutions, smart bots & websites. Join us to explore innovation!";
+    let i = 0;
+    function typingEffect() {
+      if (i < text.length) {
+        document.getElementById("typing-text").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typingEffect, 70);
+      }
+    }
+    typingEffect();
 
-  /* ---------- battery ---------- */
-  if(navigator.getBattery){
-    navigator.getBattery().then(b=>{
-      function setB(){ document.getElementById('battery').textContent = 'Battery: ' + Math.round(b.level*100) + '%'; }
-      setB(); b.addEventListener('levelchange', setB);
-    });
-  } else { document.getElementById('battery').textContent = 'Battery: N/A'; }
+    // Weather
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`)
+          .then(res => res.json())
+          .then(data => {
+            const w = data.current_weather;
+            document.getElementById('weather').innerText = 
+              `📍 Weather: ${w.temperature}°C | ${new Date().toDateString()}`;
+          });
+      });
+    }
 
-  /* ---------- weather (open-meteo) ---------- */
-  function fetchWeather(lat,lon){
-    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
-      .then(r=>r.json()).then(d=>{
-        if(d && d.current_weather){
-          const t=d.current_weather.temperature; const code=d.current_weather.weathercode;
-          let emoji='☀️'; if(code>=1 && code<=3) emoji='⛅'; else if(code>=45) emoji='🌧️';
-          document.getElementById('weather').textContent = `${emoji} ${t}°C • ${new Date().toLocaleDateString()}`;
-        } else document.getElementById('weather').textContent='Weather unavailable';
-      }).catch(()=>document.getElementById('weather').textContent='Weather unavailable');
-  }
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(pos=>fetchWeather(pos.coords.latitude,pos.coords.longitude), ()=>document.getElementById('weather').textContent='Location blocked',{timeout:10000});
-  } else document.getElementById('weather').textContent='Location not supported';
-
-  /* ---------- drawer controls ---------- */
-  const drawer = document.getElementById('drawer');
-  document.getElementById('hamburger').addEventListener('click', ()=> drawer.classList.toggle('open'));
-  document.addEventListener('click', (e)=>{ if(!drawer.contains(e.target) && !document.getElementById('hamburger').contains(e.target)) drawer.classList.remove('open'); });
-
-  /* ---------- history popup ---------- */
-  document.getElementById('historyBtn').addEventListener('click', ()=> document.getElementById('historyPopup').classList.add('show'));
-  function closeHistory(){ document.getElementById('historyPopup').classList.remove('show'); }
-
-  /* ---------- dark/light toggle ---------- */
-  const modeToggle = document.getElementById('modeToggle');
-  modeToggle.addEventListener('click', ()=>{
-    document.body.classList.toggle('light');
-    modeToggle.textContent = document.body.classList.contains('light') ? '🌞' : '🌙';
-  });
-
-  /* ---------- modals open/close ---------- */
-  function showModal(id){ document.getElementById(id).classList.add('show'); document.body.style.overflow = 'hidden'; }
-  function closeModal(id){ document.getElementById(id).classList.remove('show'); document.body.style.overflow = ''; }
-
-  document.getElementById('openCalc').addEventListener('click', ()=>{ showModal('modalCalc'); drawer.classList.remove('open'); });
-  document.getElementById('openGame').addEventListener('click', ()=>{ showModal('modalGame'); drawer.classList.remove('open'); focusGame(); });
-  document.getElementById('openCalendar').addEventListener('click', ()=>{ showModal('modalCalendar'); drawer.classList.remove('open'); generateCalendar(); });
-  document.getElementById('openSupport').addEventListener('click', ()=>{ showModal('modalSupport'); drawer.classList.remove('open'); });
-  document.getElementById('openAdvice').addEventListener('click', ()=>{ closeModal('modalSupport'); showModal('modalAdvice'); });
-
-  // close modals when clicking backdrop
-  document.querySelectorAll('.modal-wrap').forEach(m=>{
-    m.addEventListener('click', (e)=>{ if(e.target === m){ closeModal(m.id); } });
-  });
-
-  /* ---------- Calculator logic ---------- */
-  let calcExp = '';
-  const calcDisplay = document.getElementById('calcDisplay');
-  function calcInput(ch){
-    if(calcExp === '0' && ch !== '.') calcExp = ch;
-    else calcExp += ch;
-    calcDisplay.textContent = calcExp || '0';
-  }
-  function clearCalc(){ calcExp=''; calcDisplay.textContent='0'; }
-  function calculate(){
-    try {
-      if(!/^[0-9+\-*/().\s]+$/.test(calcExp)
+    // WhatsApp
+    function sendWhatsApp() {
+      const msg = document.getElementById('supportMsg').value;
+      window.open(`https://wa.me/254755660053?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+  </script>
+</body>
+</html>
