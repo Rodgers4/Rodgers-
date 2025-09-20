@@ -12,169 +12,96 @@
   <title>Rodgers Onyango | Portfolio</title>
 
   <style>
-    /* ---------- base / background ---------- */
     :root{
       --bg1:#0f2027; --bg2:#203a43; --bg3:#2c5364;
       --accent:#00ff99; --neon:#0ff; --glass: rgba(13,13,13,0.7);
       --glass-2: rgba(0,0,0,0.6);
-      --button-green: #25D366;
-      --white: #fff; --black:#000;
+      --button-green:#25D366;
+      --white:#fff; --black:#000;
     }
-    html,body{height:100%; margin:0;font-family:Arial,Helvetica,sans-serif;}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--white);}
+    body{background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));transition:background .35s,color .35s;overflow-x:hidden}
 
-/* particle canvas behind content */
-    #particles {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-    }
+/* particles canvas */
+    #particles{position:fixed;inset:0;z-index:0}
 
-    body {
-      position: relative;
-      min-height:100%;
-      color:var(--white);
-      transition: background 0.35s, color 0.35s;
-      background: linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
-      overflow-x: hidden;
-    }
-    /* Light mode variables */
-    body.light {
-      --bg1:#f4f7fb; --bg2:#eef2f7; --bg3:#e6eef9;
-      --accent:#006b4a; --neon:#006b4a; --glass: rgba(255,255,255,0.85); --glass-2: rgba(255,255,255,0.9);
-      color: #0b0b0b;
-      background: linear-gradient(135deg,#f4f7fb,#eef2f7,#e6eef9);
-    }
-
-    /* ---------- header ---------- */
-    header{
-      position: relative;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      padding:18px 16px;
-      z-index: 5;
+/* header */
+    header{position:relative;display:flex;align-items:center;justify-content:center;padding:18px 16px;z-index:5;
       background: linear-gradient(180deg, rgba(0,0,0,0.36), rgba(0,0,0,0.15));
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+      box-shadow:0 2px 12px rgba(0,0,0,0.35);
     }
-    header .left-controls, header .right-controls { position: absolute; top: 16px; display:flex; gap:10px; align-items:center; }
-    header .left-controls { left: 12px; }
-    header .right-controls { right: 12px; }
+    .left-controls,.right-controls{position:absolute;top:14px;display:flex;gap:10px;align-items:center}
+    .left-controls{left:12px}
+    .right-controls{right:12px}
+    .menu-btn{font-size:26px;cursor:pointer;background:none;border:none;color:var(--neon)}
+    .dark-btn{cursor:pointer;border:none;padding:8px;border-radius:8px;background:rgba(0,0,0,0.08);color:var(--white);font-weight:700}
+    header h1{margin:0;font-size:1.6rem;letter-spacing:.6px}
+    .clock{font-size:1rem;color:var(--neon);text-shadow:0 0 8px rgba(0,255,153,.07)}
+    .battery{font-size:.9rem;color:var(--neon);margin-top:6px}
+    .weather-small{font-size:.9rem;color:#ffeb3b;margin-top:6px}
 
-    .menu-btn { font-size:26px; cursor:pointer; background:none;border:none;color:var(--neon); }
-    .dark-btn { cursor:pointer;border:none;padding:8px;border-radius:8px;background:var(--glass-2);color:var(--white);font-weight:700; }
-    body.light .dark-btn{ background: rgba(0,0,0,0.06); color: #000; }
+/* main */
+    main{position:relative;z-index:2;max-width:900px;margin:28px auto;background:var(--glass-2);padding:22px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.45);backdrop-filter:blur(6px)}
+    h2{color:var(--neon);display:inline-block;border-bottom:2px solid var(--neon);padding-bottom:6px;margin:0 0 8px 0}
+    p{line-height:1.5}
+    .btn{display:inline-block;text-decoration:none;font-weight:700;background:var(--neon);color:var(--black);padding:10px 14px;border-radius:10px;margin:8px;transition:transform .18s}
+    .btn:hover{transform:scale(1.05)}
 
-    header h1 {margin:0; font-size:1.6rem; letter-spacing:0.6px;}
-    .clock { font-size:1rem; color:var(--neon); text-shadow:0 0 8px rgba(0,255,153,0.07); }
-    .battery { font-size:0.9rem; color:var(--neon); margin-top:6px; }
-    .weather-small { font-size:0.9rem; color: #ffeb3b; margin-top:6px; }
+/* popup history */
+    .popup{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);background:rgba(0,0,0,.96);color:var(--neon);padding:20px;border-radius:14px;box-shadow:0 0 30px rgba(0,255,153,.12);z-index:99999;opacity:0;transition:transform .25s,opacity .25s}
+    .popup.show{transform:translate(-50%,-50%) scale(1);opacity:1}
+    .popup button{margin-top:10px;background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer}
 
-    /* ---------- main content ---------- */
-    main{
-      position: relative;
-      z-index: 2;
-      max-width:900px;
-      margin: 28px auto;
-      background: var(--glass-2);
-      padding:22px;
-      border-radius:14px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-      color:inherit;
-      backdrop-filter: blur(6px);
-    }
-    section{ margin-bottom:18px; }
-    h2{ color:var(--neon); display:inline-block; border-bottom:2px solid var(--neon); padding-bottom:6px; margin:0 0 8px 0; }
-    p{ line-height:1.5; }
+/* drawer */
+    .drawer{position:fixed;top:0;left:-320px;width:320px;height:100%;background:linear-gradient(180deg,rgba(0,0,0,.96),rgba(0,0,0,.92));color:var(--white);z-index:99998;padding:18px;display:flex;flex-direction:column;transition:left .28s}
+    .drawer.open{left:0}
+    .drawer h3{color:var(--neon);margin:6px 0 12px 0}
+    .drawer .item{background:var(--neon);color:#000;padding:10px;border-radius:8px;margin:8px 0;border:none;cursor:pointer;font-weight:800;text-align:left}
+    .drawer .supportInfo{margin-top:10px;color:#ddd;font-size:0.95rem}
+    .drawer .footer{margin-top:auto;text-align:center;color:var(--neon);font-size:.95rem;padding-top:12px;border-top:1px solid rgba(255,255,255,.03)}
 
-    .btn {
-      display:inline-block; text-decoration:none; font-weight:700;
-      background:var(--neon); color:var(--black); padding:10px 14px; border-radius:10px; margin:8px; transition:transform .18s;
-    }
-    .btn:hover{ transform:scale(1.05); }
+/* console bottom */
+    .console{position:fixed;left:0;right:0;bottom:0;z-index:99997;background:rgba(13,13,13,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:18px;border-top:1px solid rgba(0,255,153,.2);box-shadow:0 -6px 30px rgba(0,255,153,.06);font-family:"Courier New",monospace;color:var(--accent);text-align:center}
+    #roytech-screen{min-height:76px;text-align:left;white-space:pre-wrap;font-size:15px}
+    .join-btn{display:inline-block;margin-top:12px;background:var(--button-green);color:#fff;padding:12px 24px;border-radius:50px;font-weight:800;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.28);transition:transform .18s}
+    .join-btn:hover{transform:scale(1.06)}
+    .console .footer{margin-top:8px;color:rgba(255,255,255,.85);font-size:.92rem;opacity:.85}
 
-    /* ---------- history popup ---------- */
-    .popup {
-      position:fixed; left:50%; top:50%; transform:translate(-50%,-50%) scale(0);
-      background: rgba(0,0,0,0.96); color:var(--neon); padding:20px; border-radius:14px;
-      box-shadow:0 0 30px rgba(0,255,153,0.12); z-index:99999; opacity:0; transition:transform .25s, opacity .25s;
-    }
-    .popup.show{ transform:translate(-50%,-50%) scale(1); opacity:1; }
-    .popup button{ margin-top:10px; background:var(--neon); color:#000; border:none; padding:10px;border-radius:8px; cursor:pointer; }
+/* modal full-screen */
+    .modal-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100000;align-items:center;justify-content:center;padding:18px}
+    .modal-wrap.show{display:flex}
+    .modal{width:100%;max-width:980px;background:linear-gradient(180deg,#081014,#0b0b0b);border-radius:12px;padding:18px;color:var(--neon);box-shadow:0 8px 40px rgba(0,0,0,.7);position:relative}
+    .modal h3{margin:0 0 8px 0}
+    .modal .close{position:absolute;right:14px;top:14px;background:#ff5a5a;border:none;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer}
 
-    /* ---------- drawer (sliding menu) ---------- */
-    .drawer {
-      position:fixed; top:0; left:-300px; width:300px; height:100%;
-      background: linear-gradient(180deg, rgba(0,0,0,0.96), rgba(0,0,0,0.92));
-      color:var(--white); z-index:99998; padding:18px; box-shadow: 3px 0 20px rgba(0,0,0,0.6);
-      transition:left .28s ease;
-      display:flex; flex-direction:column;
-    }
-    .drawer.open{ left:0; }
-    .drawer h3{ margin:4px 0 12px 0; color:var(--neon); }
-    .drawer .item { background:var(--neon); color:#000; padding:10px 12px; border-radius:8px; margin:8px 0; text-align:left; cursor:pointer; border:none; font-weight:700; }
-    .drawer .small { font-size:0.9rem; color:#ddd; margin-top:10px; }
-    .drawer .support p{ margin:8px 0; color:#fff; }
-    .drawer .footer{ margin-top:auto; text-align:center; color:var(--neon); font-size:0.95rem; padding-top:12px; border-top:1px solid rgba(255,255,255,0.03); }
+/* calculator */
+    .calc-display{background:#000;color:var(--neon);padding:12px;border-radius:8px;font-size:1.6rem;text-align:right;min-height:48px}
+    .calc-keys{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .calc-keys button{flex:1 1 22%;background:var(--neon);border:none;color:#000;padding:12px;border-radius:8px;font-weight:800;cursor:pointer}
 
-    /* ---------- bottom console ---------- */
-    .console {
-      position:fixed; left:0; right:0; bottom:0; z-index:99997;
-      background: rgba(13,13,13,0.72); backdrop-filter: blur(10px); -webkit-backdrop-filter:blur(10px);
-      padding:18px; border-top:1px solid rgba(0,255,153,0.2);
-      box-shadow: 0 -6px 30px rgba(0,255,153,0.06);
-      font-family: "Courier New", monospace; color:var(--accent);
-      text-align:center;
-    }
-    #roytech-screen{ min-height:76px; text-align:left; white-space:pre-wrap; font-size:15px; }
-    .join-btn {
-      display:inline-block; margin-top:12px; background:var(--button-green); color:#fff; padding:12px 24px; border-radius:50px; font-weight:800; text-decoration:none;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.28); transition:transform .18s, box-shadow .18s;
-    }
-    .join-btn:hover{ transform:scale(1.06); box-shadow:0 8px 24px rgba(0,0,0,0.32); }
-    .console .footer { margin-top:8px; color: rgba(255,255,255,0.85); font-size:0.92rem; opacity:0.85; }
+/* game */
+    #gameCanvas{background:#010101;border-radius:8px;display:block;margin:12px auto;border:2px solid rgba(0,255,153,.06)}
 
-    /* ---------- modals ---------- */
-    .modal-backdrop {
-      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.72); z-index:999999; align-items:center; justify-content:center;
-    }
-    .modal-backdrop.show { display:flex; }
-    .modal {
-      background: rgba(2,2,3,0.98); color:var(--neon); padding:18px; border-radius:10px; width:94%; max-width:460px; box-shadow:0 0 18px rgba(0,255,153,0.08);
-      font-family:inherit;
-    }
-    .modal h3{ margin:0 0 8px 0; }
-    .modal .close { float:right; background:#ff5a5a; border:none;color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer; }
+/* calendar */
+    .calendar table{width:100%;border-collapse:collapse;color:var(--neon)}
+    .calendar th,.calendar td{padding:8px;border:1px solid rgba(0,255,153,.06);text-align:center}
+    .calendar th{background:var(--neon);color:#000}
 
-    /* calculator buttons */
-    .calc-display{ background:#000; color:var(--neon); padding:12px; border-radius:8px; font-size:1.4rem; text-align:right; min-height:44px; }
-    .calc-keys { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; justify-content:space-between; }
-    .calc-keys button { flex: 1 1 22%; background:var(--neon); color:#000; border:none; padding:12px; border-radius:8px; font-weight:700; cursor:pointer; }
-
-    /* game canvas */
-    #gameCanvas { background:#000; display:block; margin:10px auto; border-radius:8px; border:2px solid rgba(0,255,153,0.08); }
-
-    /* calendar */
-    .calendar table{ width:100%; border-collapse:collapse; color:var(--neon); }
-    .calendar th, .calendar td{ padding:6px; border:1px solid rgba(0,255,153,0.12); text-align:center; }
-    .calendar th{ background:var(--neon); color:#000; }
-
-    /* small helper */
-    .muted { color: rgba(255,255,255,0.7); font-size:0.95rem; }
-    @media (max-width:600px){
-      header{ padding:12px 8px; }
-      .drawer{ width:86%; }
-      .menu-btn{ left:8px; }
+/* responsive */
+    @media(max-width:720px){
+      .drawer{width:86%}
+      .modal{padding:12px}
     }
   </style>
 </head>
 <body>
-  <!-- particle background -->
+  <!-- particles -->
   <canvas id="particles"></canvas>
 
-  <!-- header with hamburger, title, clock, battery, weather and dark toggle -->
+  <!-- header -->
   <header>
     <div class="left-controls">
       <button class="menu-btn" id="hamburger" aria-label="Open menu">☰</button>
@@ -184,7 +111,6 @@
       <h1>Rodgers Onyango</h1>
       <div class="clock" id="clock">00:00:00</div>
       <div class="battery" id="battery">Battery: --%</div>
-      <!-- weather moved below battery -->
       <div class="weather-small" id="weather">🌦️ Loading weather...</div>
     </div>
 
@@ -193,28 +119,27 @@
     </div>
   </header>
 
-  <!-- drawer menu -->
+  <!-- drawer -->
   <nav class="drawer" id="drawer">
     <h3>RoyTech Menu</h3>
 
-    <button class="item" id="openCalcBtn">🧮 Modern Calculator</button>
-    <button class="item" id="openGameBtn">🎮 Block Game</button>
-    <button class="item" id="openCalBtn">📅 Calendar</button>
+    <button class="item" id="openCalc">🧮 Modern Calculator</button>
+    <button class="item" id="openGame">🎮 Block Game</button>
+    <button class="item" id="openCalendar">📅 Calendar</button>
+    <button class="item" id="openSupport">💳 Support</button>
 
-    <div style="margin-top:12px;">
-      <button class="item" id="openSupportBtn">💳 Support</button>
-      <div class="small muted" style="margin-top:10px;">
-        <div>Mpesa: <strong>254716388654</strong></div>
-        <div>Paypal: <strong>rogersonyango87@gmail.com</strong></div>
-        <div>AirtelMoney: <strong>254755660053</strong></div>
-      </div>
+    <div class="supportInfo">
+      <div>Mpesa: <strong>254716388654</strong></div>
+      <div>Paypal: <strong>rogersonyango87@gmail.com</strong></div>
+      <div>AirtelMoney: <strong>254755660053</strong></div>
     </div>
 
-    <div class="footer">⚡ Powered by RoyTech</div>
+    <div class="footer">⚡ Powered by RoyTech | ©2025</div>
   </nav>
 
-  <!-- main content (kept your original structure) -->
+  <!-- main content (original structure preserved) -->
   <main>
+    <header style="display:none"></header> <!-- placeholder to keep original semantics -->
     <section id="about">
       <h2>About Me</h2>
       <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools. My passion is making smart, automated systems that simplify people's lives.</p>
@@ -239,7 +164,7 @@
     </section>
   </main>
 
-  <footer style="z-index:3;position:relative;">© 2025 Rodgers Onyango | Powered by RoyTech</footer>
+  <footer style="z-index:3;position:relative">© 2025 Rodgers Onyango | Powered by RoyTech</footer>
 
   <!-- history popup -->
   <div class="popup" id="historyPopup">
@@ -251,162 +176,138 @@
     <button onclick="closeHistory()">Close</button>
   </div>
 
-  <!-- modal backdrops -->
-  <div class="modal-backdrop" id="modalBackdrop-calc">
-    <div class="modal" role="dialog" aria-labelledby="calcTitle">
-      <button class="close" onclick="closeModal('modalBackdrop-calc')">X</button>
-      <h3 id="calcTitle">RoyTech Calculator</h3>
+  <!-- MODALS: Calculator / Game / Calendar / Support / Advice -->
+  <div class="modal-wrap" id="modalCalc">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalCalc')">X</button>
+      <h3>RoyTech Calculator</h3>
       <div class="calc-display" id="calcDisplay">0</div>
       <div class="calc-keys" id="calcKeys">
         <button onclick="calcInput('7')">7</button><button onclick="calcInput('8')">8</button><button onclick="calcInput('9')">9</button><button onclick="calcInput('/')">÷</button>
         <button onclick="calcInput('4')">4</button><button onclick="calcInput('5')">5</button><button onclick="calcInput('6')">6</button><button onclick="calcInput('*')">×</button>
         <button onclick="calcInput('1')">1</button><button onclick="calcInput('2')">2</button><button onclick="calcInput('3')">3</button><button onclick="calcInput('-')">−</button>
         <button onclick="calcInput('0')">0</button><button onclick="calcInput('.')">.</button><button onclick="calculate()">=</button><button onclick="calcInput('+')">+</button>
-        <button style="flex:1 1 100%;background:#ff6666;color:#fff;" onclick="clearCalc()">C (Clear)</button>
+        <button style="flex:1 1 100%;background:#ff6666;color:#fff" onclick="clearCalc()">C</button>
       </div>
+      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
     </div>
   </div>
 
-  <div class="modal-backdrop" id="modalBackdrop-game">
+  <div class="modal-wrap" id="modalGame">
     <div class="modal">
-      <button class="close" onclick="closeModal('modalBackdrop-game')">X</button>
+      <button class="close" onclick="closeModal('modalGame')">X</button>
       <h3>RoyTech Block Game</h3>
-      <p class="muted">Use ← and → to move. Avoid falling hazards and collect points.</p>
-      <canvas id="gameCanvas" width="320" height="320" style="display:block;margin:8px auto;border-radius:8px;"></canvas>
-      <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
-        <button onclick="startGame()" style="background:var(--neon);color:#000;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;">Start</button>
-        <button onclick="resetGame()" style="background:#ff6666;color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;">Reset</button>
+      <p style="color:rgba(255,255,255,.8)">Use ← → to move, ↑ to rotate, ↓ to drop faster. Avoid collisions and score points.</p>
+      <canvas id="gameCanvas" width="320" height="320" style="display:block;margin:12px auto;border-radius:8px;"></canvas>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
+        <button onclick="startGame()" style="background:var(--neon);color:#000;padding:8px 12px;border-radius:8px;border:none;cursor:pointer">Start</button>
+        <button onclick="resetGame()" style="background:#ff6666;color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer">Reset</button>
       </div>
+      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
     </div>
   </div>
 
-  <div class="modal-backdrop" id="modalBackdrop-calendar">
-    <div class="modal" id="calendarModalContent">
-      <button class="close" onclick="closeModal('modalBackdrop-calendar')">X</button>
+  <div class="modal-wrap" id="modalCalendar">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalCalendar')">X</button>
       <h3>RoyTech Calendar</h3>
       <div class="calendar" id="calendarWidget"></div>
+      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
     </div>
   </div>
 
-  <div class="modal-backdrop" id="modalBackdrop-support">
+  <div class="modal-wrap" id="modalSupport">
     <div class="modal">
-      <button class="close" onclick="closeModal('modalBackdrop-support')">X</button>
+      <button class="close" onclick="closeModal('modalSupport')">X</button>
       <h3>Support RoyTech</h3>
-      <p class="muted">Choose an option below:</p>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
-        <button onclick="copyText('254716388654')">📲 Mpesa: 254716388654 (Tap to copy)</button>
-        <button onclick="window.open('mailto:rogersonyango87@gmail.com')">💳 PayPal: rogersonyango87@gmail.com</button>
-        <button onclick="copyText('254755660053')">📱 AirtelMoney: 254755660053 (Tap to copy)</button>
-        <button id="adviceBtn">📝 Advice - send a message</button>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <button onclick="copyText('254716388654')" style="background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer">📲 Mpesa: 254716388654 (Tap to copy)</button>
+        <button onclick="window.open('mailto:rogersonyango87@gmail.com')" style="background:#ddd;color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer">💳 PayPal: rogersonyango87@gmail.com</button>
+        <button onclick="copyText('254755660053')" style="background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer">📱 AirtelMoney: 254755660053 (Tap to copy)</button>
+        <button id="openAdvice" style="background:#00a3ff;color:#000;border:none;padding:10px;border-radius:8px;cursor:pointer">📝 Advice - leave a message</button>
       </div>
-      <div style="margin-top:10px;font-size:0.9rem;color:rgba(255,255,255,0.85);">Or message directly: <a href="https://wa.me/0755660053" target="_blank" style="color:var(--neon)">WhatsApp (0755660053)</a></div>
+      <div style="margin-top:12px;color:rgba(255,255,255,.85)">Or message directly: <a href="https://wa.me/254755660053" target="_blank" style="color:var(--neon)">WhatsApp (0755660053)</a></div>
+      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
     </div>
   </div>
 
-  <!-- bottom live console -->
+  <!-- Advice modal -->
+  <div class="modal-wrap" id="modalAdvice">
+    <div class="modal">
+      <button class="close" onclick="closeModal('modalAdvice')">X</button>
+      <h3>Leave Advice / Message</h3>
+      <textarea id="adviceText" placeholder="Write your message..." style="width:100%;min-height:120px;padding:10px;border-radius:8px;background:#000;color:var(--neon);border:1px solid rgba(0,255,153,0.08)"></textarea>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button onclick="sendAdvice()" style="flex:1;background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;font-weight:700">Send to WhatsApp</button>
+        <button onclick="closeModal('modalAdvice')" style="flex:1;background:#ff6666;color:#fff;border:none;padding:10px;border-radius:8px">Cancel</button>
+      </div>
+      <div style="text-align:right;margin-top:10px;color:rgba(255,255,255,.7);font-size:.9rem">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- bottom console -->
   <div class="console" id="roytechConsole">
     <div id="roytech-screen"></div>
     <a class="join-btn" href="https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e" target="_blank">🚀 Join RoyTech Team</a>
     <div class="footer">Powered by RoyTech | ©2025</div>
   </div>
 
-  <!-- Advice modal (inline tiny form) -->
-  <div class="modal-backdrop" id="modalBackdrop-advice">
-    <div class="modal">
-      <button class="close" onclick="closeModal('modalBackdrop-advice')">X</button>
-      <h3>Leave Advice / Message</h3>
-      <textarea id="adviceText" placeholder="Write your message..." style="width:100%;min-height:120px;padding:8px;border-radius:8px;background:#000;color:var(--neon);border:1px solid rgba(0,255,153,0.08)"></textarea>
-      <div style="display:flex;gap:8px;margin-top:8px;">
-        <button style="flex:1;background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;font-weight:700;" onclick="sendAdvice()">Send to WhatsApp</button>
-        <button style="flex:1;background:#ff6666;color:#fff;border:none;padding:10px;border-radius:8px;" onclick="closeModal('modalBackdrop-advice')">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ====== SCRIPT ====== -->
   <script>
-  /* ---------- particles background ---------- */
+  /* ---------- particles ---------- */
   (function(){
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let w = canvas.width = innerWidth;
-    let h = canvas.height = innerHeight;
-    const N = Math.floor((w*h)/90000); // density
-    const pts = [];
-    function rand(min,max){return Math.random()*(max-min)+min;}
-    for(let i=0;i<N;i++) pts.push({x:rand(0,w), y:rand(0,h), vx:rand(-0.25,0.25), vy:rand(-0.2,0.2), size:rand(0.4,1.6)});
-    function frame(){
+    const c = document.getElementById('particles'), ctx = c.getContext('2d');
+    let w = c.width = innerWidth, h = c.height = innerHeight;
+    let pts = [];
+    const N = Math.max(30, Math.floor((w*h)/100000));
+    const rand=(a,b)=>Math.random()*(b-a)+a;
+    for(let i=0;i<N;i++) pts.push({x:rand(0,w),y:rand(0,h),vx:rand(-0.3,0.3),vy:rand(-0.2,0.2),r:rand(0.6,1.6)});
+    addEventListener('resize', ()=>{ w=c.width=innerWidth; h=c.height=innerHeight; });
+    (function frame(){
       ctx.clearRect(0,0,w,h);
       for(let p of pts){
-        p.x += p.vx; p.y += p.vy;
-        if(p.x<0) p.x=w; if(p.x>w) p.x=0;
-        if(p.y<0) p.y=h; if(p.y>h) p.y=0;
-        ctx.beginPath();
-        ctx.fillStyle = 'rgba(0,255,153,0.06)';
-        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-        ctx.fill();
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0) p.x=w; if(p.x>w) p.x=0; if(p.y<0) p.y=h; if(p.y>h) p.y=0;
+        ctx.beginPath(); ctx.fillStyle='rgba(0,255,153,0.06)'; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
       }
       requestAnimationFrame(frame);
-    }
-    addEventListener('resize', ()=>{ w = canvas.width = innerWidth; h = canvas.height = innerHeight; });
-    frame();
+    })();
   })();
 
-  /* ---------- header: clock & battery & weather ---------- */
-  function updateClock(){
-    const now = new Date();
-    document.getElementById('clock').textContent = now.toLocaleTimeString();
-  }
+  /* ---------- clock ---------- */
+  function updateClock(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString(); }
   setInterval(updateClock,1000); updateClock();
 
+  /* ---------- battery ---------- */
   if(navigator.getBattery){
-    navigator.getBattery().then(bat=>{
-      function setB(){ document.getElementById('battery').textContent = 'Battery: ' + Math.round(bat.level*100) + '%'; }
-      bat.addEventListener('levelchange', setB); setB();
+    navigator.getBattery().then(b=>{
+      function setB(){ document.getElementById('battery').textContent = 'Battery: ' + Math.round(b.level*100) + '%'; }
+      setB(); b.addEventListener('levelchange', setB);
     });
-  } else {
-    document.getElementById('battery').textContent = 'Battery: N/A';
-  }
+  } else { document.getElementById('battery').textContent = 'Battery: N/A'; }
 
-  // Weather (Open-Meteo) using geolocation
+  /* ---------- weather (open-meteo) ---------- */
   function fetchWeather(lat,lon){
-    // open-meteo current weather (no API key)
     fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
-      .then(r=>r.json())
-      .then(d=>{
+      .then(r=>r.json()).then(d=>{
         if(d && d.current_weather){
-          const t = d.current_weather.temperature;
-          // interpret weathercode roughly:
-          const code = d.current_weather.weathercode;
-          let emoji = "☀️";
-          if(code >= 1 && code <= 3) emoji="⛅";
-          else if(code >=45 && code <= 99) emoji="🌧️";
+          const t=d.current_weather.temperature; const code=d.current_weather.weathercode;
+          let emoji='☀️'; if(code>=1 && code<=3) emoji='⛅'; else if(code>=45) emoji='🌧️';
           document.getElementById('weather').textContent = `${emoji} ${t}°C • ${new Date().toLocaleDateString()}`;
-        } else {
-          document.getElementById('weather').textContent = 'Weather unavailable';
-        }
-      }).catch(()=> document.getElementById('weather').textContent = 'Weather unavailable');
+        } else document.getElementById('weather').textContent='Weather unavailable';
+      }).catch(()=>document.getElementById('weather').textContent='Weather unavailable');
   }
-
   if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(pos=>{
-      fetchWeather(pos.coords.latitude, pos.coords.longitude);
-    }, err=>{
-      document.getElementById('weather').textContent = 'Location blocked';
-    },{timeout:10000});
-  } else {
-    document.getElementById('weather').textContent = 'Location not supported';
-  }
+    navigator.geolocation.getCurrentPosition(pos=>fetchWeather(pos.coords.latitude,pos.coords.longitude), ()=>document.getElementById('weather').textContent='Location blocked',{timeout:10000});
+  } else document.getElementById('weather').textContent='Location not supported';
 
-  /* ---------- drawer open/close ---------- */
+  /* ---------- drawer controls ---------- */
   const drawer = document.getElementById('drawer');
   document.getElementById('hamburger').addEventListener('click', ()=> drawer.classList.toggle('open'));
+  document.addEventListener('click', (e)=>{ if(!drawer.contains(e.target) && !document.getElementById('hamburger').contains(e.target)) drawer.classList.remove('open'); });
 
   /* ---------- history popup ---------- */
-  const historyBtn = document.getElementById('historyBtn');
-  const historyPopup = document.getElementById('historyPopup');
-  historyBtn.addEventListener('click', ()=> historyPopup.classList.add('show'));
-  function closeHistory(){ historyPopup.classList.remove('show'); }
+  document.getElementById('historyBtn').addEventListener('click', ()=> document.getElementById('historyPopup').classList.add('show'));
+  function closeHistory(){ document.getElementById('historyPopup').classList.remove('show'); }
 
   /* ---------- dark/light toggle ---------- */
   const modeToggle = document.getElementById('modeToggle');
@@ -416,7 +317,29 @@
   });
 
   /* ---------- modals open/close ---------- */
-  function openModal(id){ document.getElementById(id).classList.add('show'); }
-  function closeModal(id){ document.getElementById(id).classList.remove('show'); }
-  document.getElementById('openCalcBtn').addEventListener('click', ()=>{
-    document.getElementById('modalBackdrop-calc').cl
+  function showModal(id){ document.getElementById(id).classList.add('show'); document.body.style.overflow = 'hidden'; }
+  function closeModal(id){ document.getElementById(id).classList.remove('show'); document.body.style.overflow = ''; }
+
+  document.getElementById('openCalc').addEventListener('click', ()=>{ showModal('modalCalc'); drawer.classList.remove('open'); });
+  document.getElementById('openGame').addEventListener('click', ()=>{ showModal('modalGame'); drawer.classList.remove('open'); focusGame(); });
+  document.getElementById('openCalendar').addEventListener('click', ()=>{ showModal('modalCalendar'); drawer.classList.remove('open'); generateCalendar(); });
+  document.getElementById('openSupport').addEventListener('click', ()=>{ showModal('modalSupport'); drawer.classList.remove('open'); });
+  document.getElementById('openAdvice').addEventListener('click', ()=>{ closeModal('modalSupport'); showModal('modalAdvice'); });
+
+  // close modals when clicking backdrop
+  document.querySelectorAll('.modal-wrap').forEach(m=>{
+    m.addEventListener('click', (e)=>{ if(e.target === m){ closeModal(m.id); } });
+  });
+
+  /* ---------- Calculator logic ---------- */
+  let calcExp = '';
+  const calcDisplay = document.getElementById('calcDisplay');
+  function calcInput(ch){
+    if(calcExp === '0' && ch !== '.') calcExp = ch;
+    else calcExp += ch;
+    calcDisplay.textContent = calcExp || '0';
+  }
+  function clearCalc(){ calcExp=''; calcDisplay.textContent='0'; }
+  function calculate(){
+    try {
+      if(!/^[0-9+\-*/().\s]+$/.test(calcExp)
