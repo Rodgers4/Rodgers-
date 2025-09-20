@@ -4,11 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Rodgers Onyango - Portfolio & Projects">
-  <meta property="og:title" content="Rodgers Onyango | Portfolio">
-  <meta property="og:description" content="Explore Rodgers Onyango's projects, bots, and web creations.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://rodgersweb.vercel.app">
-  <meta property="og:image" content="https://rodgersweb.vercel.app/preview.png">
   <title>Rodgers Onyango | Portfolio</title>
   <style>
     body {
@@ -18,15 +13,13 @@
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: #fff;
       text-align: center;
+      transition: background 0.5s, color 0.5s;
     }
 
     header {
       background: rgba(0,0,0,0.6);
       padding: 20px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
     h1 { margin: 0; font-size: 2.5rem; }
@@ -36,6 +29,11 @@
       margin-top: 10px;
       color: #0ff;
       text-shadow: 0 0 10px #0ff;
+    }
+
+    .weather {
+      font-size: 1rem;
+      margin-top: 5px;
     }
 
     main {
@@ -79,7 +77,6 @@
       font-size: 0.9rem;
     }
 
-    /* Popup animation */
     .popup {
       position: fixed;
       top: 50%;
@@ -90,9 +87,8 @@
       padding: 20px 30px;
       border-radius: 15px;
       box-shadow: 0 0 20px #0ff;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       max-width: 400px;
-      line-height: 1.5;
       text-align: left;
       opacity: 0;
       transition: transform 0.3s ease, opacity 0.3s ease;
@@ -117,35 +113,42 @@
       font-weight: bold;
     }
 
-    .battery { margin-top: 10px; font-size: 1rem; color: #0ff; }
+    .dark-mode {
+      background: #f9f9f9;
+      color: #000;
+    }
+
+    .dark-mode header, .dark-mode main, .dark-mode footer {
+      background: rgba(255,255,255,0.7);
+      color: #000;
+    }
+
+    .popup input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: none;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Rodgers Onyango</h1>
     <div class="clock" id="clock">00:00:00</div>
-    <div class="battery" id="battery">Battery: --%</div>
+    <div class="weather" id="weather">Loading weather...</div>
+    <button class="btn" onclick="toggleDarkMode()">🌙 / ☀️</button>
   </header>
 
   <main>
-    <!-- ABOUT -->
     <section id="about">
       <h2>About Me</h2>
-      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools. My passion is making smart, automated systems that simplify people's lives.</p>
-      <button class="btn" onclick="showHistory()">Read My Full History</button>
+      <p>Hi, I’m Rodgers Onyango — a 21-year-old creative developer and innovator who loves building bots, web apps, and online tools.</p>
+      <button class="btn" onclick="showFounder()">View Founder Info</button>
     </section>
 
-    <!-- PROJECTS -->
-    <section id="projects">
-      <h2>Projects</h2>
-      <p><strong>QUEEN BELLA:</strong> WhatsApp bot with real-time status viewing, reactions, and automations.</p>
-      <p><strong>Toxic Lover:</strong> Facebook Messenger AI chatbot using Gemini + Groq AI.</p>
-      <p><strong>Portfolio Website:</strong> Built with HTML, CSS, deployed on Vercel + GitHub Pages.</p>
-    </section>
-
-    <!-- CONTACT BUTTONS -->
-    <section id="contact">
-      <h2>Contact Me</h2>
+    <section>
+      <h2>Socials</h2>
       <a href="https://www.instagram.com/Roy254_onyango" target="_blank" class="btn">Instagram</a>
       <a href="https://www.tiktok.com/@_ouma4" target="_blank" class="btn">TikTok</a>
       <a href="https://x.com/rogersonyango54" target="_blank" class="btn">Twitter (X)</a>
@@ -154,19 +157,31 @@
       <a href="mailto:rogersonyango87@gmail.com" target="_blank" class="btn">Gmail</a>
     </section>
 
-    <!-- Join RoyTech Button + Popup -->
+    <section>
+      <h2>My Bots</h2>
+      <button class="btn" onclick="showBots()">USE MY BOTS</button>
+    </section>
+
+    <section>
+      <h2>Games & Tools</h2>
+      <button class="btn" onclick="playGame('https://play2048.co/')">Play 2048</button>
+      <button class="btn" onclick="playGame('https://tetris.com/play-tetris')">Play Tetris</button>
+      <button class="btn" onclick="playGame('https://snake.io')">Play Snake</button>
+    </section>
+
+    <!-- Join RoyTech Section -->
     <section>
       <h2>Join RoyTech</h2>
-      <button class="btn" onclick="showJoinForm()">Join RoyTech</button>
+      <button class="btn" onclick="document.getElementById('joinPopup').classList.add('show')">Join RoyTech</button>
     </section>
 
     <div class="popup" id="joinPopup">
       <p><strong>Join RoyTech</strong></p>
-      <input type="text" id="firstName" placeholder="Enter First Name" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none;">
-      <input type="text" id="lastName" placeholder="Enter Last Name" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none;">
-      <input type="tel" id="phone" placeholder="Enter Phone Number" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none;">
+      <input type="text" id="firstName" placeholder="Enter First Name">
+      <input type="text" id="lastName" placeholder="Enter Last Name">
+      <input type="tel" id="phone" placeholder="Enter Phone Number">
       <button onclick="submitJoin()">Submit</button>
-      <button onclick="closePopup('joinPopup')">Close</button>
+      <button onclick="document.getElementById('joinPopup').classList.remove('show')">Close</button>
       <p style="margin-top:10px;font-size:0.9rem;color:#0ff;">Powered by 𝐄𝐌𝐏𝐇𝐎𝐄</p>
     </div>
   </main>
@@ -176,74 +191,82 @@
   </footer>
 
   <!-- Popups -->
-  <div class="popup" id="historyPopup">
-    <p><strong>My Journey:</strong><br><br>
-    I was born and raised in Kisumu, Kenya. Growing up, I loved exploring technology and finding new ways to create things online.  
-    Over the years, I built bots like QUEEN BELLA and Toxic Lover, which connect with WhatsApp and Messenger users worldwide.  
-    I continue learning and building every day, with a vision to use technology to uplift my family and inspire others.</p>
-    <button onclick="closePopup('historyPopup')">Close</button>
+  <div class="popup" id="founderPopup">
+    <p><strong>Founder Info:</strong><br><br>
+    Name: RODGERS ONYANGO <br>
+    Home: KISUMU KENYA <br>
+    Status: SINGLE <br>
+    CONT: 0755660053 <br>
+    AGE: 21 YEARS <br>
+    EDU..: BACHELOR DEGREE <br>
+    INST: EGERTON.
+    </p>
+    <button onclick="closePopup('founderPopup')">Close</button>
   </div>
 
-  <div class="popup" id="popup">RoyTech Loading...</div>
+  <div class="popup" id="botsPopup">
+    <p><strong>Choose a Bot:</strong></p>
+    <button onclick="window.open('https://github.com/Rodgers4/QUEEN-BELLA','_blank')">QUEEN BELLA</button>
+    <button onclick="window.open('https://www.facebook.com/Taz254','_blank')">TOXIC LOVER</button>
+    <button onclick="closePopup('botsPopup')">Close</button>
+  </div>
 
   <script>
     // Clock
     function updateClock() {
       const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+      document.getElementById('clock').textContent = now.toLocaleTimeString();
     }
     setInterval(updateClock, 1000); updateClock();
 
-    // Battery
-    if (navigator.getBattery) {
-      navigator.getBattery().then(function(battery) {
-        function updateBattery() {
-          document.getElementById('battery').textContent = `Battery: ${(battery.level * 100).toFixed(0)}%`;
-        }
-        battery.addEventListener('levelchange', updateBattery);
-        updateBattery();
-      });
+    // Weather using free API
+    async function fetchWeather() {
+      try {
+        let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=-0.0917&longitude=34.7679&current_weather=true");
+        let data = await res.json();
+        document.getElementById('weather').textContent = `🌤 ${data.current_weather.temperature}°C`;
+      } catch {
+        document.getElementById('weather').textContent = "Weather Unavailable";
+      }
+    }
+    fetchWeather();
+
+    // Dark Mode
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
     }
 
-    // RoyTech popup on button clicks
-    const allBtns = document.querySelectorAll('.btn');
-    allBtns.forEach(btn => btn.addEventListener('click', () => showPopup()));
-
-    function showPopup() {
-      const popup = document.getElementById('popup');
-      popup.classList.add('show');
-      setTimeout(() => popup.classList.remove('show'), 2000);
+    // Popups
+    function showFounder() {
+      document.getElementById('founderPopup').classList.add('show');
+    }
+    function showBots() {
+      document.getElementById('botsPopup').classList.add('show');
+    }
+    function closePopup(id) {
+      document.getElementById(id).classList.remove('show');
     }
 
-    function showJoinForm() {
-      document.getElementById('joinPopup').classList.add('show');
+    // Games
+    function playGame(url) {
+      window.open(url, "_blank");
     }
 
+    // Join RoyTech
     function submitJoin() {
       const firstName = document.getElementById('firstName').value.trim();
       const lastName = document.getElementById('lastName').value.trim();
       const phone = document.getElementById('phone').value.trim();
 
-      if(!firstName || !lastName || !phone){
+      if (!firstName || !lastName || !phone) {
         alert("Please fill all fields");
         return;
       }
 
       // Redirect to RoyTech WhatsApp channel
       window.open("https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e", "_blank");
-      closePopup('joinPopup');
-    }
-
-    function closePopup(popupId){
-      document.getElementById(popupId).classList.remove('show');
-    }
-
-    function showHistory() {
-      document.getElementById('historyPopup').classList.add('show');
+      document.getElementById('joinPopup').classList.remove('show');
     }
   </script>
 </body>
-  </html>
+        </html>
