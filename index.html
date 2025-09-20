@@ -1,301 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RoyTech Website</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Rodgers Onyango - Portfolio & Projects" />
+  <title>Rodgers Onyango | RoyTech</title>
   <style>
-    body {
-      margin: 0;
-      font-family: monospace, Arial, sans-serif;
-      background: #0a0a0a;
-      color: #00ffcc;
-      transition: background 0.3s, color 0.3s;
+    :root{
+      --bg1:#0f2027; --bg2:#203a43; --bg3:#2c5364;
+      --accent:#00ff99; --neon:#0ff; --glass: rgba(13,13,13,0.72);
+      --muted: rgba(255,255,255,0.75);
+      --green:#25D366;
     }
-    .light-mode {
-      background: #f4f4f4;
-      color: #222;
-    }
+    html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));color:#fff;}
+    body.light{ --bg1:#f4f7fb; --bg2:#eef2f7; --bg3:#e6eef9; color:#111; background: linear-gradient(135deg,#f4f7fb,#eef2f7,#e6eef9); --glass: rgba(255,255,255,0.9); --accent:#0077ff; --neon:#0077ff; --muted: rgba(0,0,0,0.7); --green:#0bb24b; }
     /* Header */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 15px;
-      background: rgba(0, 0, 0, 0.8);
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-    }
-    .menu-icon {
-      font-size: 26px;
-      cursor: pointer;
-    }
-    .right-icons {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .dark-toggle {
-      cursor: pointer;
-      padding: 5px 10px;
-      border: 1px solid #00ffcc;
-      border-radius: 6px;
-    }
-    /* Weather */
-    .battery-weather {
-      position: fixed;
-      top: 40px;
-      left: 10px;
-      font-size: 14px;
-    }
-    /* Typing Effect Section */
-    .typing-section {
-      position: fixed;
-      bottom: 60px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 18px;
-      padding: 10px;
-    }
-    .join-btn {
-      margin-top: 10px;
-      background: #00ffcc;
-      color: #000;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    /* Footer */
-    footer {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-      font-size: 12px;
-      opacity: 0.7;
-    }
-    /* Drawer Menu */
-    .drawer {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background: #111;
-      transition: left 0.3s ease-in-out;
-      z-index: 1500;
-      padding: 20px;
-    }
-    .drawer.open {
-      left: 0;
-    }
-    .drawer ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .drawer li {
-      padding: 10px 0;
-      border-bottom: 1px solid #333;
-      cursor: pointer;
-    }
-    .drawer-footer {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 12px;
-    }
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-    }
-    .modal-content {
-      background: #1a1a1a;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      position: relative;
-    }
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-      font-size: 18px;
+    header{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);z-index:20}
+    .left {display:flex;align-items:center;gap:12px}
+    .menu-btn{background:var(--neon);color:#000;border:none;padding:8px 10px;border-radius:8px;font-weight:800;cursor:pointer}
+    h1{margin:0;font-size:1.25rem;letter-spacing:0.5px}
+    .right {display:flex;align-items:center;gap:10px}
+    .mode-btn{background:var(--neon);color:#000;border:none;padding:6px 10px;border-radius:8px;cursor:pointer;font-weight:700}
+    .clock {font-family:monospace;color:var(--neon);margin-top:4px;font-size:0.95rem}
+    /* Top corner small info */
+    .top-info {position:fixed;left:18px;top:72px; z-index:15; color:var(--neon); font-family:monospace}
+    .top-info .battery,.top-info .weather{display:block;background:var(--glass);padding:6px 10px;border-radius:8px;margin-top:8px;color:var(--neon);font-size:0.9rem}
+    /* Main container */
+    main{max-width:920px;margin:110px auto 180px auto;padding:20px;background:var(--glass);border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+    section{margin-bottom:20px}
+    h2{color:var(--neon);display:inline-block;border-bottom:2px solid var(--neon);padding-bottom:6px}
+    p{line-height:1.5;color:var(--muted)}
+    .btn{display:inline-block;background:var(--neon);color:#000;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:800;margin:6px;cursor:pointer}
+    .btn:hover{transform:scale(1.04)}
+    /* Side drawer */
+    .drawer{position:fixed;top:0;left:-320px;width:320px;height:100%;background:linear-gradient(180deg,rgba(0,0,0,0.98),#050505);padding:18px;z-index:999;box-shadow:4px 0 30px rgba(0,0,0,0.6);transition:left .28s ease}
+    .drawer.open{left:0}
+    .drawer h3{color:var(--neon);margin:0 0 12px}
+    .drawer .menu-item{background:var(--neon);color:#000;padding:10px;border-radius:8px;margin:8px 0;border:none;cursor:pointer;font-weight:800}
+    .drawer .small{color:#ccc;font-size:0.9rem}
+    .drawer .footer{margin-top:auto;color:var(--neon);text-align:center;padding-top:12px;border-top:1px solid rgba(255,255,255,0.02)}
+    /* Modals */
+    .modal-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:1200;align-items:center;justify-content:center;padding:18px}
+    .modal-wrap.show{display:flex}
+    .modal{background:linear-gradient(180deg,#071016,#0b0b0b);padding:18px;border-radius:12px;color:var(--neon);width:100%;max-width:720px;box-shadow:0 10px 40px rgba(0,0,0,0.6);position:relative}
+    .modal .close{position:absolute;right:12px;top:12px;background:#ff6b6b;border:none;padding:8px;border-radius:8px;color:#fff;cursor:pointer}
+    /* Calculator */
+    .calc-display{background:#000;color:var(--neon);padding:12px;border-radius:8px;font-size:1.4rem;text-align:right}
+    .calc-keys{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .calc-keys button{flex:1 1 22%;background:var(--neon);color:#000;border:none;padding:12px;border-radius:8px;font-weight:800;cursor:pointer}
+    /* Game canvas */
+    #gameCanvas{background:#000;display:block;margin:12px auto;border-radius:8px;border:2px solid rgba(0,255,153,0.06)}
+    /* Calendar */
+    .calendar table{width:100%;border-collapse:collapse;color:var(--neon)}
+    .calendar th,.calendar td{padding:8px;border:1px solid rgba(0,255,153,0.06);text-align:center}
+    .calendar th{background:var(--neon);color:#000}
+    /* Founder card */
+    .founder-card{max-width:320px;margin:14px auto;padding:12px;border-radius:10px;background:rgba(0,0,0,0.45);border:1px solid rgba(0,255,153,0.06);text-align:left}
+    .founder-card h3{color:var(--neon);margin:0 0 8px}
+    .founder-card p{margin:6px 0;color:var(--muted)}
+    /* Social icons */
+    .socials{display:flex;gap:12px;justify-content:center;margin:16px 0}
+    .socials a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid var(--neon);color:var(--neon);text-decoration:none;font-size:18px}
+    .socials a:hover{background:var(--neon);color:#000;transform:scale(1.08)}
+    /* Console bottom */
+    .console{position:fixed;left:0;right:0;bottom:0;padding:14px;background:rgba(0,0,0,0.9);font-family:monospace;color:var(--neon);z-index:15}
+    .console .screen{white-space:pre-wrap;min-height:64px;text-align:left;max-width:920px;margin:0 auto}
+    .join-roy{display:inline-block;margin-top:10px;background:var(--green);color:#fff;padding:10px 18px;border-radius:40px;text-decoration:none;font-weight:800}
+    /* small responsiveness */
+    @media(max-width:720px){
+      .drawer{width:86%}
+      main{margin:90px 12px 220px 12px}
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
-    <span class="menu-icon" onclick="toggleDrawer()">☰</span>
-    <div class="right-icons">
-      <span class="dark-toggle" onclick="toggleDarkMode()">🌓</span>
+    <div class="left">
+      <button class="menu-btn" id="menuBtn" title="Open menu">{=}</button>
+      <h1>Rodgers Onyango</h1>
+    </div>
+    <div class="right">
+      <div class="clock" id="clock">00:00:00</div>
+      <button class="mode-btn" id="modeBtn" title="Toggle dark/light">🌙</button>
     </div>
   </header>
 
-  <div class="battery-weather" id="weather">Loading weather...</div>
-
-  <!-- Typing Section -->
-  <div class="typing-section">
-    <span id="typing-text"></span><br />
-    <button class="join-btn" onclick="window.open('https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e','_blank')">
-      Join RoyTech Team
-    </button>
+  <!-- Top-left battery + weather -->
+  <div class="top-info" aria-hidden="false">
+    <div class="battery" id="battery">Battery: --%</div>
+    <div class="weather" id="weather">Weather: Loading...</div>
   </div>
 
-  <footer>Powered by RoyTech | ©2025</footer>
+  <!-- Side Drawer -->
+  <aside class="drawer" id="drawer">
+    <div>
+      <h3>RoyTech Menu</h3>
+      <button class="menu-item" id="openCalcBtn">🧮 Modern Calculator</button>
+      <button class="menu-item" id="openGameBtn">🎮 Block Game</button>
+      <button class="menu-item" id="openCalendarBtn">📅 Calendar</button>
+      <button class="menu-item" id="openSupportBtn">💳 Support</button>
+      <button class="menu-item" id="openFollowBtn">🔗 Follow Me</button>
+      <button class="menu-item" id="openBotsBtn">🤖 Use My Bots</button>
+      <button class="menu-item" id="openDetailsBtn">👤 My Details</button>
+    </div>
+    <div class="drawer-footer">
+      ⚡ Powered by RoyTech | ©2025
+    </div>
+  </aside>
 
-  <!-- Drawer Menu -->
-  <div class="drawer" id="drawer">
-    <ul>
-      <li onclick="openModal('calcModal')">🧮 Calculator</li>
-      <li onclick="openModal('gameModal')">🎮 Block Game</li>
-      <li onclick="openModal('calendarModal')">📅 Calendar</li>
-      <li onclick="openModal('supportModal')">💬 Support</li>
-    </ul>
-    <div class="drawer-footer">Powered by RoyTech</div>
+  <!-- Main content (keeps your original structure) -->
+  <main>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools. My passion is making smart, automated systems that simplify people's lives.</p>
+      <button class="btn" id="historyBtn">Read My Full History</button>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <p><strong>QUEEN BELLA:</strong> WhatsApp bot with real-time status viewing, reactions, and automations.</p>
+      <p><strong>TOXIC LOVER:</strong> Facebook Messenger AI chatbot using Gemini + Groq AI.</p>
+      <p><strong>Portfolio Website:</strong> Built with HTML, CSS, deployed on Vercel + GitHub Pages.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <a class="btn" href="https://www.instagram.com/Roy254_onyango" target="_blank">Instagram</a>
+      <a class="btn" href="https://www.tiktok.com/@_ouma4" target="_blank">TikTok</a>
+      <a class="btn" href="https://x.com/rogersonyango54" target="_blank">X (Twitter)</a>
+      <a class="btn" href="https://wa.me/254755660053" target="_blank">WhatsApp</a>
+      <a class="btn" href="https://www.facebook.com/Taz254" target="_blank">Facebook</a>
+      <a class="btn" href="mailto:rogersonyango87@gmail.com" target="_blank">Gmail</a>
+    </section>
+
+    <!-- Founder mini-card on page -->
+    <div class="founder-card" aria-hidden="false">
+      <h3>Founder • Rodgers Onyango</h3>
+      <p><strong>Home:</strong> Kisumu, Kenya</p>
+      <p><strong>Status:</strong> Single</p>
+      <p><strong>Contact:</strong> 0755660053</p>
+      <p><strong>Age:</strong> 17 years</p>
+      <p><strong>Education:</strong> Bachelor Degree — Egerton</p>
+    </div>
+
+    <!-- Social icons -->
+    <div class="socials" role="navigation" aria-label="socials">
+      <a title="Instagram" href="https://www.instagram.com/Roy254_onyango" target="_blank">📷</a>
+      <a title="TikTok" href="https://www.tiktok.com/@_ouma4" target="_blank">🎵</a>
+      <a title="X (Twitter)" href="https://x.com/rogersonyango54" target="_blank">𝕏</a>
+      <a title="WhatsApp" href="https://wa.me/254755660053" target="_blank">💬</a>
+      <a title="Facebook" href="https://www.facebook.com/Taz254" target="_blank">📘</a>
+      <a title="Email" href="mailto:rogersonyango87@gmail.com" target="_blank">✉️</a>
+    </div>
+  </main>
+
+  <!-- RoyTech console (bottom) -->
+  <div class="console" role="status" aria-live="polite">
+    <div class="screen" id="roytechScreen"></div>
+    <a class="join-roy" href="https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e" target="_blank">🚀 Join RoyTech Team</a>
   </div>
 
-  <!-- Calculator Modal -->
-  <div class="modal" id="calcModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('calcModal')">✖</span>
-      <h3>Calculator</h3>
-      <input type="text" id="calcDisplay" readonly style="width: 100%; font-size: 20px;" /><br />
-      <div>
-        <button onclick="appendCalc('7')">7</button>
-        <button onclick="appendCalc('8')">8</button>
-        <button onclick="appendCalc('9')">9</button>
-        <button onclick="appendCalc('/')">÷</button><br />
-        <button onclick="appendCalc('4')">4</button>
-        <button onclick="appendCalc('5')">5</button>
-        <button onclick="appendCalc('6')">6</button>
-        <button onclick="appendCalc('*')">×</button><br />
-        <button onclick="appendCalc('1')">1</button>
-        <button onclick="appendCalc('2')">2</button>
-        <button onclick="appendCalc('3')">3</button>
-        <button onclick="appendCalc('-')">−</button><br />
-        <button onclick="appendCalc('0')">0</button>
-        <button onclick="clearCalc()">C</button>
-        <button onclick="calculate()">=</button>
-        <button onclick="appendCalc('+')">+</button>
+  <!-- Modals: Calculator / Game / Calendar / Support / Follow / Bots / Details / History -->
+  <!-- Calculator -->
+  <div class="modal-wrap" id="modalCalc">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="calcTitle">
+      <button class="close" aria-label="Close" onclick="closeModal('modalCalc')">✖</button>
+      <h2 id="calcTitle">RoyTech Calculator</h2>
+      <div class="calc-display" id="calcDisplay">0</div>
+      <div class="calc-keys" id="calcKeys">
+        <button onclick="calcInput('7')">7</button><button onclick="calcInput('8')">8</button><button onclick="calcInput('9')">9</button><button onclick="calcInput('/')">÷</button>
+        <button onclick="calcInput('4')">4</button><button onclick="calcInput('5')">5</button><button onclick="calcInput('6')">6</button><button onclick="calcInput('*')">×</button>
+        <button onclick="calcInput('1')">1</button><button onclick="calcInput('2')">2</button><button onclick="calcInput('3')">3</button><button onclick="calcInput('-')">−</button>
+        <button onclick="calcInput('0')">0</button><button onclick="calcInput('.')">.</button><button onclick="calculate()">=</button><button onclick="calcInput('+')">+</button>
+        <button style="flex:1 1 100%;background:#ff6666;color:#fff" onclick="clearCalc()">C</button>
+      </div>
+      <div style="text-align:right;margin-top:12px;color:rgba(255,255,255,0.7)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Game -->
+  <div class="modal-wrap" id="modalGame">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="gameTitle">
+      <button class="close" aria-label="Close" onclick="closeModal('modalGame'); resetGame();">✖</button>
+      <h2 id="gameTitle">RoyTech Block Game</h2>
+      <p style="color:var(--muted)">Use ← → to move, ↑ rotate, ↓ to drop. Esc closes.</p>
+      <canvas id="gameCanvas" width="320" height="320" style="display:block;margin:12px auto;border-radius:8px;background:#000"></canvas>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
+        <button class="menu-item" onclick="startGame()">Start</button>
+        <button class="menu-item" onclick="resetGame()">Reset</button>
+      </div>
+      <div style="text-align:right;margin-top:12px;color:rgba(255,255,255,0.7)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Calendar -->
+  <div class="modal-wrap" id="modalCalendar">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="calTitle">
+      <button class="close" aria-label="Close" onclick="closeModal('modalCalendar')">✖</button>
+      <h2 id="calTitle">RoyTech Calendar</h2>
+      <div class="calendar" id="calendarWidget"></div>
+      <div style="text-align:right;margin-top:12px;color:rgba(255,255,255,0.7)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Support -->
+  <div class="modal-wrap" id="modalSupport">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="supTitle">
+      <button class="close" aria-label="Close" onclick="closeModal('modalSupport')">✖</button>
+      <h2 id="supTitle">Support RoyTech</h2>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+        <button onclick="copyToClipboard('254716388654')" class="menu-item">📲 Mpesa: 254716388654 (Tap to copy)</button>
+        <button onclick="window.open('mailto:rogersonyango87@gmail.com')" class="menu-item" style="background:#ddd;color:#000">💳 PayPal: rogersonyango87@gmail.com</button>
+        <button onclick="copyToClipboard('254755660053')" class="menu-item">📱 AirtelMoney: 254755660053 (Tap to copy)</button>
+        <button onclick="openAdvice()" class="menu-item" style="background:#00a3ff;color:#000">📝 Advice - Send a message</button>
+      </div>
+      <div style="margin-top:12px;color:var(--muted)">Or message directly: <a href="https://wa.me/254755660053" target="_blank" style="color:var(--neon);text-decoration:none">WhatsApp (0755660053)</a></div>
+      <div style="text-align:right;margin-top:12px;color:rgba(255,255,255,0.7)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Follow Me (socials modal) -->
+  <div class="modal-wrap" id="modalFollow">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="followTitle">
+      <button class="close" aria-label="Close" onclick="closeModal('modalFollow')">✖</button>
+      <h2 id="followTitle">Follow RoyTech</h2>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+        <button onclick="window.open('https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e')" class="menu-item">📢 RoyTech Channel (WhatsApp)</button>
+        <button onclick="window.open('https://www.facebook.com/Taz254')" class="menu-item">📘 Facebook</button>
+        <button onclick="window.open('https://www.instagram.com/Roy254_onyango')" class="menu-item">📷 Instagram</button>
+        <button onclick="window.open('https://x.com/rogersonyango54')" class="menu-item">𝕏 (Twitter)</button>
+        <button onclick="window.open('https://www.tiktok.com/@_ouma4')" class="menu-item">🎵 TikTok</button>
+        <button onclick="window.open('mailto:rogersonyango87@gmail.com')" class="menu-item" style="background:#ddd;color:#000">✉️ Email</button>
+      </div>
+      <div style="text-align:right;margin-top:12px;color:rgba(255,255,255,0.7)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Use My Bots -->
+  <div class="modal-wrap" id="modalBots">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="botsTitle">
+      <button class="close" aria-label="Close" onclick="closeModal('modalBots')">✖</button>
+      <h2 id="botsTitle">Use My Bots</h2>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+        <button class="menu-item" onclick="window.open('https://www.facebook.com/queenbella')">QUEEN BELLA (Facebook)</button>
+        <button class="menu-item" onclick="window.open('https://www.facebook.com/toxiclover')">TOXIC LOVER (Facebook)</button>
+      </div>
+      <div style="text-align:right;margin-top:12px;color:rgba(255,255,255,0.7)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- My Details -->
+  <div class="modal-wrap" id="modalDetails">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="detailsTitle">
+      <button class="close" aria-label="Close" onclick="closeModal('modalDetails')">✖</button>
+      <h2 id="detailsTitle">Founder • RODGERS ONYANGO</h2>
+      <div style="text-align:left;margin-top:10px;color:var(--muted);line-height:1.5">
+        <p><strong>Name:</strong> RODGERS ONYANGO</p>
+        <p><strong>Home:</strong> KISUMU, KENYA</p>
+        <p><strong>Status:</strong> SINGLE</p>
+        <p><strong>Contact:</strong> 0755660053</p>
+        <p><strong>Age:</strong> 17 YEARS</p>
+        <p><strong>Education:</strong> BACHELOR DEGREE</p>
+        <p><strong>Institution:</strong> EGERTON</p>
+      </div>
+      <div style="text-align:right;margin-top:12px;color:rgba(255,255,255,0.7)">Powered by RoyTech | ©2025</div>
+    </div>
+  </div>
+
+  <!-- Advice modal (WhatsApp send form) -->
+  <div class="modal-wrap" id="modalAdvice">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="close" aria-label="Close" onclick="closeModal('modalAdvice')">✖</button>
+      <h2>Leave Advice / Message</h2>
+      <textarea id="adviceText" placeholder="Write your message..." style="width:100%;min-height:120px;padding:10px;border-radius:8px;background:#000;color:var(--neon);border:1px solid rgba(0,255,153,0.06)"></textarea>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button style="flex:1;background:var(--neon);color:#000;border:none;padding:10px;border-radius:8px;font-weight:700" onclick="sendAdvice()">Send to WhatsApp</button>
+        <button style="flex:1;background:#ff6666;color:#fff;border:none;padding:10px;border-radius:8px" onclick="closeModal('modalAdvice')">Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- Game Modal -->
-  <div class="modal" id="gameModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('gameModal')">✖</span>
-      <h3>Block Game</h3>
-      <canvas id="blockGame" width="300" height="400" style="background:#000"></canvas>
+  <!-- History popup (smaller) -->
+  <div class="modal-wrap" id="modalHistory">
+    <div class="modal">
+      <button class="close" aria-label="Close" onclick="closeModal('modalHistory')">✖</button>
+      <h2>My Journey</h2>
+      <p style="color:var(--muted);text-align:left">
+        I was born and raised in Kisumu, Kenya. Growing up, I loved exploring technology and finding new ways to create things online.
+        Over the years, I built bots like QUEEN BELLA and TOXIC LOVER, which connect with WhatsApp and Messenger users worldwide.
+        I continue learning and building every day, with a vision to use technology to uplift my family and inspire others.
+      </p>
     </div>
   </div>
 
-  <!-- Calendar Modal -->
-  <div class="modal" id="calendarModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('calendarModal')">✖</span>
-      <h3>Calendar</h3>
-      <div id="calendar"></div>
+  <!-- Footer area (keeps site footer) -->
+  <footer style="text-align:center;padding:16px;margin-top:28px;color:var(--muted);position:relative;z-index:1">
+    <div style="max-width:920px;margin:0 auto">
+      <div class="socials" aria-hidden="false" style="margin-bottom:6px">
+        <a title="Instagram" href="https://www.instagram.com/Roy254_onyango" target="_blank">📷</a>
+        <a title="TikTok" href="https://www.tiktok.com/@_ouma4" target="_blank">🎵</a>
+        <a title="X" href="https://x.com/rogersonyango54" target="_blank">𝕏</a>
+        <a title="WhatsApp" href="https://wa.me/254755660053" target="_blank">💬</a>
+        <a title="Facebook" href="https://www.facebook.com/Taz254" target="_blank">📘</a>
+        <a title="Email" href="mailto:rogersonyango87@gmail.com" target="_blank">✉️</a>
+      </div>
+      <div>© 2025 Rodgers Onyango | Powered by RoyTech</div>
     </div>
-  </div>
+  </footer>
 
-  <!-- Support Modal -->
-  <div class="modal" id="supportModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('supportModal')">✖</span>
-      <h3>Support</h3>
-      <p>M-Pesa: 254716388654</p>
-      <p>PayPal: rogersonyango87@gmail.com</p>
-      <p>Airtel Money: 254755660053</p>
-      <textarea id="supportMsg" placeholder="Leave a message"></textarea><br />
-      <button onclick="sendWhatsApp()">Send to WhatsApp</button>
-    </div>
-  </div>
-
+  <!-- Scripts -->
   <script>
-    // Drawer
-    function toggleDrawer() {
-      document.getElementById('drawer').classList.toggle('open');
-    }
+  // -------------------------
+  // Clock
+  // -------------------------
+  function updateClock(){
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString();
+  }
+  setInterval(updateClock,1000); updateClock();
 
-    // Dark/Light Mode
-    function toggleDarkMode() {
-      document.body.classList.toggle('light-mode');
-    }
+  // -------------------------
+  // Battery
+  // -------------------------
+  if(navigator.getBattery){
+    navigator.getBattery().then(b=>{
+      function setB(){ document.getElementById('battery').textContent = 'Battery: ' + Math.round(b.level*100) + '%'; }
+      setB();
+      b.addEventListener('levelchange', setB);
+    }).catch(()=>{ document.getElementById('battery').textContent = 'Battery: N/A'; });
+  } else { document.getElementById('battery').textContent = 'Battery: N/A'; }
 
-    // Modals
-    function openModal(id) {
-      document.getElementById(id).style.display = 'flex';
-    }
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-
-    // Calculator
-    function appendCalc(val) {
-      document.getElementById('calcDisplay').value += val;
-    }
-    function clearCalc() {
-      document.getElementById('calcDisplay').value = '';
-    }
-    function calculate() {
-      try {
-        document.getElementById('calcDisplay').value = eval(document.getElementById('calcDisplay').value);
-      } catch {
-        document.getElementById('calcDisplay').value = 'Error';
-      }
-    }
-
-    // Typing Effect
-    const text = "RoyTech builds modern solutions, smart bots & websites. Join us to explore innovation!";
-    let i = 0;
-    function typingEffect() {
-      if (i < text.length) {
-        document.getElementById("typing-text").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typingEffect, 70);
-      }
-    }
-    typingEffect();
-
-    // Weather
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`)
-          .then(res => res.json())
-          .then(data => {
-            const w = data.current_weather;
-            document.getElementById('weather').innerText = 
-              `📍 Weather: ${w.temperature}°C | ${new Date().toDateString()}`;
-          });
-      });
-    }
-
-    // WhatsApp
-    function sendWhatsApp() {
-      const msg = document.getElementById('supportMsg').value;
-      window.open(`https://wa.me/254755660053?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-  </script>
-</body>
-</html>
+  // ------------
