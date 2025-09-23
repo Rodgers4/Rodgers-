@@ -3,8 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Rodgers Onyango - Portfolio & Projects">
+
+  <!-- SEO & Google Verification -->
+  <meta name="description" content="Official Portfolio of Rodgers Onyango. Developer, innovator, and founder of RoyTech. Discover my projects, bots, and story.">
+  <meta name="keywords" content="Rodgers Onyango, RoyTech, Portfolio, Developer, Tech, Kisumu">
+  <meta name="author" content="Rodgers Onyango">
+  <meta name="google-site-verification" content="g1tU_nhX5K7-xBr1BmEQpxeVhpKpCeW2meLrIDFsBxE" />
+
   <title>Rodgers Onyango | Portfolio</title>
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Rodgers Onyango",
+    "url": "https://yourdomain.com",
+    "image": "https://yourdomain.com/profile.jpg",
+    "sameAs": [
+      "https://www.facebook.com/Taz254",
+      "https://wa.me/254755660053",
+      "https://www.tiktok.com/@_ouma4"
+    ],
+    "description": "Tech enthusiast, developer and founder of RoyTech from Kisumu, Kenya."
+  }
+  </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -24,17 +48,12 @@
 
     h1 { margin: 0; font-size: 2.5rem; }
 
-    .clock {
-      font-size: 2rem;
-      margin-top: 10px;
-      color: #0ff;
-      text-shadow: 0 0 10px #0ff;
-    }
-
-    .weather {
+    .clock, .battery, .weather {
       font-size: 1rem;
       margin-top: 5px;
     }
+
+    .clock { font-size: 2rem; color: #0ff; text-shadow: 0 0 10px #0ff; }
 
     main {
       max-width: 900px;
@@ -123,12 +142,16 @@
       color: #000;
     }
 
-    .popup input {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 8px;
-      border: none;
+    /* Loading Popup */
+    #loadingPopup {
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: #0ff;
+      font-weight: bold;
+      letter-spacing: 2px;
     }
   </style>
 </head>
@@ -136,6 +159,7 @@
   <header>
     <h1>Rodgers Onyango</h1>
     <div class="clock" id="clock">00:00:00</div>
+    <div class="battery" id="battery">Battery: --%</div>
     <div class="weather" id="weather">Loading weather...</div>
     <button class="btn" onclick="toggleDarkMode()">🌙 / ☀️</button>
   </header>
@@ -143,47 +167,24 @@
   <main>
     <section id="about">
       <h2>About Me</h2>
-      <p>Hi, I’m Rodgers Onyango — a 21-year-old creative developer and innovator who loves building bots, web apps, and online tools.</p>
-      <button class="btn" onclick="showFounder()">View Founder Info</button>
+      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools.</p>
+      <button class="btn" onclick="showPopup('historyPopup')">My History</button>
     </section>
 
     <section>
       <h2>Socials</h2>
-      <a href="https://www.instagram.com/Roy254_onyango" target="_blank" class="btn">Instagram</a>
-      <a href="https://www.tiktok.com/@_ouma4" target="_blank" class="btn">TikTok</a>
-      <a href="https://x.com/rogersonyango54" target="_blank" class="btn">Twitter (X)</a>
-      <a href="https://wa.me/254755660053" target="_blank" class="btn">WhatsApp</a>
-      <a href="https://www.facebook.com/Taz254" target="_blank" class="btn">Facebook</a>
-      <a href="mailto:rogersonyango87@gmail.com" target="_blank" class="btn">Gmail</a>
+      <button class="btn" onclick="showLoading(() => window.open('https://www.instagram.com/Roy254_onyango','_blank'));">Instagram</button>
+      <button class="btn" onclick="showLoading(() => window.open('https://www.tiktok.com/@_ouma4','_blank'));">TikTok</button>
+      <button class="btn" onclick="showLoading(() => window.open('https://x.com/rogersonyango54','_blank'));">Twitter</button>
+      <button class="btn" onclick="showLoading(() => window.open('https://wa.me/254755660053','_blank'));">WhatsApp</button>
+      <button class="btn" onclick="showLoading(() => window.open('https://www.facebook.com/Taz254','_blank'));">Facebook</button>
+      <button class="btn" onclick="showLoading(() => window.open('mailto:rogersonyango87@gmail.com','_blank'));">Gmail</button>
     </section>
 
     <section>
       <h2>My Bots</h2>
-      <button class="btn" onclick="showBots()">USE MY BOTS</button>
+      <button class="btn" onclick="showPopup('botsPopup')">USE MY BOTS</button>
     </section>
-
-    <section>
-      <h2>Games & Tools</h2>
-      <button class="btn" onclick="playGame('https://play2048.co/')">Play 2048</button>
-      <button class="btn" onclick="playGame('https://tetris.com/play-tetris')">Play Tetris</button>
-      <button class="btn" onclick="playGame('https://snake.io')">Play Snake</button>
-    </section>
-
-    <!-- Join RoyTech Section -->
-    <section>
-      <h2>Join RoyTech</h2>
-      <button class="btn" onclick="document.getElementById('joinPopup').classList.add('show')">Join RoyTech</button>
-    </section>
-
-    <div class="popup" id="joinPopup">
-      <p><strong>Join RoyTech</strong></p>
-      <input type="text" id="firstName" placeholder="Enter First Name">
-      <input type="text" id="lastName" placeholder="Enter Last Name">
-      <input type="tel" id="phone" placeholder="Enter Phone Number">
-      <button onclick="submitJoin()">Submit</button>
-      <button onclick="document.getElementById('joinPopup').classList.remove('show')">Close</button>
-      <p style="margin-top:10px;font-size:0.9rem;color:#0ff;">Powered by 𝐄𝐌𝐏𝐇𝐎𝐄</p>
-    </div>
   </main>
 
   <footer>
@@ -191,17 +192,11 @@
   </footer>
 
   <!-- Popups -->
-  <div class="popup" id="founderPopup">
-    <p><strong>Founder Info:</strong><br><br>
-    Name: RODGERS ONYANGO <br>
-    Home: KISUMU KENYA <br>
-    Status: SINGLE <br>
-    CONT: 0755660053 <br>
-    AGE: 21 YEARS <br>
-    EDU..: BACHELOR DEGREE <br>
-    INST: EGERTON.
+  <div class="popup" id="historyPopup">
+    <p><strong>My History:</strong><br><br>
+    I am Rodgers Onyango from Kisumu, Kenya. I am passionate about tech and innovation. Through RoyTech, I create bots, automation tools, and websites to empower others. My vision is to uplift my family and community while building smarter digital solutions.
     </p>
-    <button onclick="closePopup('founderPopup')">Close</button>
+    <button onclick="closePopup('historyPopup')">Close</button>
   </div>
 
   <div class="popup" id="botsPopup">
@@ -209,6 +204,10 @@
     <button onclick="window.open('https://github.com/Rodgers4/QUEEN-BELLA','_blank')">QUEEN BELLA</button>
     <button onclick="window.open('https://www.facebook.com/Taz254','_blank')">TOXIC LOVER</button>
     <button onclick="closePopup('botsPopup')">Close</button>
+  </div>
+
+  <div class="popup" id="loadingPopup">
+    <p>RoyTech Loading...</p>
   </div>
 
   <script>
@@ -219,7 +218,18 @@
     }
     setInterval(updateClock, 1000); updateClock();
 
-    // Weather using free API
+    // Battery API
+    if (navigator.getBattery) {
+      navigator.getBattery().then(battery => {
+        function updateBattery() {
+          document.getElementById('battery').textContent = `Battery: ${Math.round(battery.level * 100)}%`;
+        }
+        battery.addEventListener('levelchange', updateBattery);
+        updateBattery();
+      });
+    }
+
+    // Weather
     async function fetchWeather() {
       try {
         let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=-0.0917&longitude=34.7679&current_weather=true");
@@ -231,42 +241,27 @@
     }
     fetchWeather();
 
-    // Dark Mode
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
     }
 
-    // Popups
-    function showFounder() {
-      document.getElementById('founderPopup').classList.add('show');
+    function showPopup(id) {
+      document.getElementById(id).classList.add('show');
     }
-    function showBots() {
-      document.getElementById('botsPopup').classList.add('show');
-    }
+
     function closePopup(id) {
       document.getElementById(id).classList.remove('show');
     }
 
-    // Games
-    function playGame(url) {
-      window.open(url, "_blank");
-    }
-
-    // Join RoyTech
-    function submitJoin() {
-      const firstName = document.getElementById('firstName').value.trim();
-      const lastName = document.getElementById('lastName').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-
-      if (!firstName || !lastName || !phone) {
-        alert("Please fill all fields");
-        return;
-      }
-
-      // Redirect to RoyTech WhatsApp channel
-      window.open("https://whatsapp.com/channel/0029VbBH9IGCnA7l7rdZlB0e", "_blank");
-      document.getElementById('joinPopup').classList.remove('show');
+    // RoyTech Loading
+    function showLoading(callback) {
+      const popup = document.getElementById('loadingPopup');
+      popup.classList.add('show');
+      setTimeout(() => {
+        popup.classList.remove('show');
+        if (callback) callback();
+      }, 2000);
     }
   </script>
 </body>
-        </html>
+  </html>
