@@ -1,267 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rodgers Onyango | RoyTech CEO</title>
+<meta name="description" content="Official Futuristic Portfolio of Rodgers Onyango | RoyTech CEO">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
-  <!-- SEO & Google Verification -->
-  <meta name="description" content="Official Portfolio of Rodgers Onyango. Developer, innovator, and founder of RoyTech. Discover my projects, bots, and story.">
-  <meta name="keywords" content="Rodgers Onyango, RoyTech, Portfolio, Developer, Tech, Kisumu">
-  <meta name="author" content="Rodgers Onyango">
-  <meta name="google-site-verification" content="g1tU_nhX5K7-xBr1BmEQpxeVhpKpCeW2meLrIDFsBxE" />
+html,body{
+  margin:0;padding:0;
+  font-family:'Orbitron',sans-serif;
+  color:#fff;
+  background:#000;
+  overflow-x:hidden;
+}
 
-  <title>Rodgers Onyango | Portfolio</title>
+/* animated particle background */
+canvas#bg{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  z-index:-1;
+  background:radial-gradient(circle at 20% 20%,#081b29,#000);
+}
 
-  <!-- Schema Markup -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Rodgers Onyango",
-    "url": "https://yourdomain.com",
-    "image": "https://yourdomain.com/profile.jpg",
-    "sameAs": [
-      "https://www.facebook.com/Taz254",
-      "https://wa.me/254755660053",
-      "https://www.tiktok.com/@_ouma4"
-    ],
-    "description": "Tech enthusiast, developer and founder of RoyTech from Kisumu, Kenya."
-  }
-  </script>
+/* Header */
+header{
+  text-align:center;
+  padding:40px 10px 10px;
+}
+h1{
+  font-size:2rem;
+  color:#0ff;
+  text-shadow:0 0 10px #0ff,0 0 20px #00f;
+}
+.typewrite>span{
+  border-right:2px solid #0ff;
+  animation:blink .7s infinite;
+}
+@keyframes blink{50%{border-color:transparent;}}
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      text-align: center;
-      transition: background 0.5s, color 0.5s;
-    }
+/* Clock Battery Weather */
+.info-bar{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  font-size:0.9rem;
+  margin-bottom:15px;
+}
 
-    header {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-    }
+/* Sections */
+main{
+  max-width:900px;
+  margin:20px auto;
+  background:rgba(255,255,255,0.05);
+  border-radius:20px;
+  padding:25px;
+  backdrop-filter:blur(6px);
+  box-shadow:0 0 20px rgba(0,255,255,.2);
+}
+h2{
+  color:#0ff;
+  border-bottom:2px solid #0ff;
+  display:inline-block;
+  margin-bottom:10px;
+}
 
-    h1 { margin: 0; font-size: 2.5rem; }
+/* Buttons */
+.btn{
+  display:inline-block;
+  background:linear-gradient(90deg,#0ff,#08f);
+  color:#000;
+  font-weight:bold;
+  border:none;
+  padding:10px 20px;
+  border-radius:30px;
+  margin:8px;
+  cursor:pointer;
+  transition:transform .3s, box-shadow .3s;
+  text-decoration:none;
+}
+.btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px #0ff;
+}
 
-    .clock, .battery, .weather {
-      font-size: 1rem;
-      margin-top: 5px;
-    }
+/* Popups */
+.popup{
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background:rgba(0,0,0,0.95);
+  color:#0ff;
+  padding:25px 35px;
+  border-radius:15px;
+  box-shadow:0 0 25px #0ff;
+  font-size:1rem;
+  max-width:420px;
+  text-align:left;
+  opacity:0;
+  transition:all .4s;
+  z-index:9999;
+}
+.popup.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
+.popup button{
+  margin-top:15px;
+  width:100%;
+  background:#0ff;
+  color:#000;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    .clock { font-size: 2rem; color: #0ff; text-shadow: 0 0 10px #0ff; }
+/* Footer */
+footer{
+  background:rgba(0,0,0,0.8);
+  padding:20px;
+  text-align:center;
+  position:fixed;
+  bottom:0;left:0;width:100%;
+}
+footer .btn{margin:6px;}
 
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
+/* Floating music button */
+#musicBtn{
+  position:fixed;
+  bottom:100px;
+  right:30px;
+  width:60px;height:60px;
+  border-radius:50%;
+  background:radial-gradient(circle,#0ff,#06f);
+  color:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.6rem;
+  cursor:pointer;
+  box-shadow:0 0 20px #0ff;
+  animation:float 6s ease-in-out infinite;
+  z-index:10000;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
 
-    section { margin-bottom: 20px; }
-
-    h2 {
-      color: #0ff;
-      border-bottom: 2px solid #0ff;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #0ff;
-      color: #000;
-      border: none;
-      padding: 10px 15px;
-      margin: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      border-radius: 10px;
-      transition: 0.3s;
-      text-decoration: none;
-    }
-
-    .btn:hover { transform: scale(1.1); }
-
-    footer {
-      background: rgba(0,0,0,0.8);
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
-
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: rgba(0, 0, 0, 0.95);
-      color: #0ff;
-      padding: 20px 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #0ff;
-      font-size: 1.2rem;
-      max-width: 400px;
-      text-align: left;
-      opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      z-index: 9999;
-    }
-
-    .popup.show {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 1;
-    }
-
-    .popup button {
-      margin-top: 10px;
-      display: block;
-      width: 100%;
-      background: #0ff;
-      border: none;
-      color: #000;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .dark-mode {
-      background: #f9f9f9;
-      color: #000;
-    }
-
-    .dark-mode header, .dark-mode main, .dark-mode footer {
-      background: rgba(255,255,255,0.7);
-      color: #000;
-    }
-
-    /* Loading Popup */
-    #loadingPopup {
-      background: rgba(0,0,0,0.85);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.5rem;
-      color: #0ff;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-  </style>
+/* Loading */
+#loadingPopup{
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  display:flex;justify-content:center;align-items:center;
+  background:rgba(0,0,0,0.9);
+  font-size:1.5rem;
+  color:#0ff;
+  font-weight:bold;
+  letter-spacing:2px;
+  z-index:10000;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s;
+}
+#loadingPopup.show{opacity:1;pointer-events:all;}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Rodgers Onyango</h1>
-    <div class="clock" id="clock">00:00:00</div>
-    <div class="battery" id="battery">Battery: --%</div>
-    <div class="weather" id="weather">Loading weather...</div>
-    <button class="btn" onclick="toggleDarkMode()">🌙 / ☀️</button>
-  </header>
+<canvas id="bg"></canvas>
 
-  <main>
-    <section id="about">
-      <h2>About Me</h2>
-      <p>Hi, I’m Rodgers Onyango — a creative developer and innovator who loves building bots, web apps, and online tools.</p>
-      <button class="btn" onclick="showPopup('historyPopup')">My History</button>
-    </section>
-
-    <section>
-      <h2>Socials</h2>
-      <button class="btn" onclick="showLoading(() => window.open('https://www.instagram.com/Roy254_onyango','_blank'));">Instagram</button>
-      <button class="btn" onclick="showLoading(() => window.open('https://www.tiktok.com/@_ouma4','_blank'));">TikTok</button>
-      <button class="btn" onclick="showLoading(() => window.open('https://x.com/rogersonyango54','_blank'));">Twitter</button>
-      <button class="btn" onclick="showLoading(() => window.open('https://wa.me/254755660053','_blank'));">WhatsApp</button>
-      <button class="btn" onclick="showLoading(() => window.open('https://www.facebook.com/Taz254','_blank'));">Facebook</button>
-      <button class="btn" onclick="showLoading(() => window.open('mailto:rogersonyango87@gmail.com','_blank'));">Gmail</button>
-    </section>
-
-    <section>
-      <h2>My Bots</h2>
-      <button class="btn" onclick="showPopup('botsPopup')">USE MY BOTS</button>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 Rodgers Onyango | Powered by RoyTech</p>
-  </footer>
-
-  <!-- Popups -->
-  <div class="popup" id="historyPopup">
-    <p><strong>My History:</strong><br><br>
-    I am Rodgers Onyango from Kisumu, Kenya. I am passionate about tech and innovation. Through RoyTech, I create bots, automation tools, and websites to empower others. My vision is to uplift my family and community while building smarter digital solutions.
-    </p>
-    <button onclick="closePopup('historyPopup')">Close</button>
+<header>
+  <h1 class="typewrite" data-text='["RODGERS ONYANGO | ROYTECH CEO"]'><span></span></h1>
+  <div class="info-bar">
+    <div id="clock">--:--:--</div>
+    <div id="battery">Battery: --%</div>
+    <div id="weather">Loading weather...</div>
   </div>
+</header>
 
-  <div class="popup" id="botsPopup">
-    <p><strong>Choose a Bot:</strong></p>
-    <button onclick="window.open('https://github.com/Rodgers4/QUEEN-BELLA','_blank')">QUEEN BELLA</button>
-    <button onclick="window.open('https://www.facebook.com/Taz254','_blank')">TOXIC LOVER</button>
-    <button onclick="closePopup('botsPopup')">Close</button>
-  </div>
+<main>
+  <section id="about">
+    <h2>About Me</h2>
+    <p id="aboutText"></p>
+  </section>
 
-  <div class="popup" id="loadingPopup">
-    <p>RoyTech Loading...</p>
-  </div>
+  <section>
+    <h2>Projects & Links</h2>
+    <a class="btn" href="https://github.com/Rodgers4/QUEEN-BELLA" target="_blank">QUEEN BELLA</a>
+    <a class="btn" href="https://queen-bella-s-library.vercel.app/" target="_blank">QUEEN BELLA LIBRARY</a>
+    <a class="btn" href="https://www.facebook.com/profile.php?id=61581175632222" target="_blank">LORNA AI</a>
+    <a class="btn" href="https://www.facebook.com/profile.php?id=61577838299856" target="_blank">ONLY SISTER</a>
+  </section>
 
-  <script>
-    // Clock
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').textContent = now.toLocaleTimeString();
-    }
-    setInterval(updateClock, 1000); updateClock();
+  <section>
+    <h2>Socials</h2>
+    <a class="btn" href="https://www.instagram.com/Roy254_onyango" target="_blank">Instagram</a>
+    <a class="btn" href="https://www.tiktok.com/@_ouma4" target="_blank">TikTok</a>
+    <a class="btn" href="https://x.com/rogersonyango54" target="_blank">Twitter</a>
+    <a class="btn" href="https://wa.me/254755660053" target="_blank">WhatsApp</a>
+    <a class="btn" href="https://www.facebook.com/Taz254" target="_blank">Facebook</a>
+    <a class="btn" href="mailto:rogersonyango87@gmail.com" target="_blank">Gmail</a>
+  </section>
+</main>
 
-    // Battery API
-    if (navigator.getBattery) {
-      navigator.getBattery().then(battery => {
-        function updateBattery() {
-          document.getElementById('battery').textContent = `Battery: ${Math.round(battery.level * 100)}%`;
-        }
-        battery.addEventListener('levelchange', updateBattery);
-        updateBattery();
-      });
-    }
+<footer>
+  <p>©2025 RODGERS ONYANGO | Powered by RoyTech</p>
+</footer>
 
-    // Weather
-    async function fetchWeather() {
-      try {
-        let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=-0.0917&longitude=34.7679&current_weather=true");
-        let data = await res.json();
-        document.getElementById('weather').textContent = `🌤 ${data.current_weather.temperature}°C`;
-      } catch {
-        document.getElementById('weather').textContent = "Weather Unavailable";
-      }
-    }
-    fetchWeather();
+<div id="loadingPopup">RoyTech Loading...</div>
 
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-    }
+<div class="popup" id="historyPopup">
+  <p><strong>My History:</strong><br><br>
+  I’m Rodgers Onyango from Kisumu, Kenya — founder of RoyTech, a visionary developer dedicated to crafting bots, futuristic systems, and web experiences that empower people. My mission is to uplift my family, inspire youth in tech, and lead innovations shaping Africa’s digital future.
+  </p>
+  <button onclick="closePopup('historyPopup')">Close</button>
+</div>
 
-    function showPopup(id) {
-      document.getElementById(id).classList.add('show');
-    }
+<!-- Music Button -->
+<div id="musicBtn" title="Toggle Music 🎧">🎧</div>
+<audio id="bgMusic" loop>
+  <!-- Replace the src below with a legal/royalty-free MP3 URL -->
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5e2ce5f50b.mp3" type="audio/mpeg">
+</audio>
 
-    function closePopup(id) {
-      document.getElementById(id).classList.remove('show');
-    }
+<script>
+// Typing header
+const typewrite = document.querySelector('.typewrite');
+const span = typewrite.querySelector('span');
+const texts = JSON.parse(typewrite.getAttribute('data-text'));
+let txtIndex=0,charIndex=0;
+function typeLoop(){
+  let current = texts[txtIndex];
+  span.textContent = current.slice(0, ++charIndex);
+  if(charIndex === current.length){
+    setTimeout(()=>{charIndex=0;typeLoop();},3000);
+  } else {
+    setTimeout(typeLoop,120);
+  }
+}
+typeLoop();
 
-    // RoyTech Loading
-    function showLoading(callback) {
-      const popup = document.getElementById('loadingPopup');
-      popup.classList.add('show');
-      setTimeout(() => {
-        popup.classList.remove('show');
-        if (callback) callback();
-      }, 2000);
-    }
-  </script>
+// About me typing loop
+const aboutP=document.getElementById("aboutText");
+const aboutText="Hi, I’m Rodgers Onyango — a quantum-minded innovator, full-stack developer, and CEO of RoyTech. I craft intelligent bots, futuristic web systems, and automation tools that connect people and technology seamlessly. Passionate about elevating African tech, I fuse creativity and code to build tomorrow’s digital revolution.";
+let i=0;
+function typeAbout(){
+  aboutP.textContent=aboutText.slice(0,++i);
+  if(i===aboutText.length){setTimeout(()=>{i=0;aboutP.textContent='';typeAbout();},6000);}
+  else setTimeout(typeAbout,60);
+}
+typeAbout();
+
+// Clock
+setInterval(()=>{
+  document.getElementById('clock').textContent=new Date().toLocaleTimeString();
+},1000);
+
+// Battery
+if(navigator.getBattery){
+  navigator.getBattery().then(b=>{
+    function update(){document.getElementById('battery').textContent=`Battery: ${Math.round(b.level*100)}%`; }
+    b.addEventListener('levelchange',update);update();
+  });
+}
+
+// Weather
+(async()=>{
+ try{
+   let res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=-0.0917&longitude=34.7679&current_weather=true");
+   let data=await res.json();
+   document.getElementById('weather').textContent=`🌤 ${data.current_weather.temperature}°C`;
+ }catch{document.getElementById('weather').textContent="Weather Unavailable";}
+})();
+
+// Popup controls
+function closePopup(id){document.getElementById(id).classList.remove('show');}
+
+// Loading popup
+function showLoading(){
+  const l=document.getElementById('loadingPopup');
+  l.classList.add('show');
+  setTimeout(()=>l.classList.remove('show'),2000);
+}
+
+// Music toggle
+const music=document.getElementById("bgMusic");
+const btn=document.getElementById("musicBtn");
+let playing=false;
+btn.addEventListener("click",()=>{
+  if(!playing){music.play();btn.textContent="🔊";}else{music.pause();btn.textContent="🎧";}
+  playing=!playing;
+});
+
+// Particle background
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+let w,h,particles=[];
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+}
+window.addEventListener('resize',resize);resize();
+for(let i=0;i<100;i++){
+  particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*0.5,vy:(Math.random()-.5)*0.5});
+}
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(0,255,255,0.8)';
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>w)p.vx*=-1;
+    if(p.y<0||p.y>h)p.vy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,1.2,0,Math.PI*2);ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
 </body>
-  </html>
+      </html>
